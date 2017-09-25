@@ -10,16 +10,13 @@ typedef struct my_tree_node{
   my_tree_node* left; //If we go left it means that address is 0 for that bit
 }my_tree_node;
 
-typedef struct my_tree {
-  my_tree_node* root;
-}my_tree;
 
 //Function that returns a empty tree, that is the right and left links are pointing to null.
-my_tree create_tree();
+my_tree_node* create_tree();
 
-//Function that inserts a new tree in the give links
+//Function that inserts a new node in the give links of the tree with the next_hoop
 //returns 1 if good 0 if it occours a problem.
-int insert_tree(my_tree_node* link);
+int inert_node(my_tree_node* link,char* next_hoop);
 
 //function that removes the right node attached to previous_node
 // if to_remove = 1 or remove the left node if to_remove = 0.
