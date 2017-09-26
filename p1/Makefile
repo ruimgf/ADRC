@@ -6,11 +6,11 @@ DEPS = tree.o
 
 all: $(TARGET)
 
-tree : src/tree.c src/tree.h
-	$(CC) $(CFLAGS) -c src/tree.c
+tree.o : src/tree.c src/tree.h
+	$(CC) $(CFLAGS) -c src/tree.c -o obj/tree.o
 
-$(TARGET): $(TARGET).c $(DEPS)
-	$(CC) $(CFLAGS) $(TARGET).c $(DEPS) -o $(TARGET).o
+$(TARGET): src/$(TARGET).c $(DEPS)
+	$(CC) $(CFLAGS) src/$(TARGET).c obj/$(DEPS) -o $(TARGET).o
 
 clean:
-	$(RM) *.o *~
+	$(RM) *.o *~ obj/*.o
