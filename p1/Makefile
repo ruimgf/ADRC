@@ -2,15 +2,15 @@ CC = gcc
 CFLAGS  = -Wall
 TARGET = main
 
-DEPS = example.o
+DEPS = tree.o
 
 all: $(TARGET)
 
-example.o : example.c example.h
-	$(CC) $(CFLAGS) -c example.c
+tree : src/tree.c src/tree.h
+	$(CC) $(CFLAGS) -c src/tree.c
 
 $(TARGET): $(TARGET).c $(DEPS)
 	$(CC) $(CFLAGS) $(TARGET).c $(DEPS) -o $(TARGET).o
-  
+
 clean:
 	$(RM) *.o *~
