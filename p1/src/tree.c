@@ -1,12 +1,15 @@
 #include "tree.h"
 
-my_tree_node * create_tree(){
-  my_tree_node * root;
-  root = (my_tree_node*) malloc(sizeof(my_tree_node));
+BinaryNode * createBinaryTree(){
+  BinaryNode * root;
+  root = (BinaryNode*) malloc(sizeof(BinaryNode));
 
-  root->next_hoop = NULL;
-  root->right = NULL;
-  root->left = NULL;
-
+  root->nextHoop = NULL;
+  root->childs[0] = NULL;
+  root->childs[1] = NULL;
   return root;
+}
+
+BinaryNode * readBinaryTreeFromFile(){
+
 }
