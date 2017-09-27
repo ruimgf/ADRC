@@ -31,18 +31,15 @@ void PrintTable(BinaryNode * root,char * address){
   if(root->nextHoop!=-1){
     printf("%16s %d\n",address,root->nextHoop);
   }
+  char nextAddress[17];
+  strcpy(nextAddress, address);
+  int len = strlen(nextAddress);
   if(root->childs[0] != NULL){
-    char nextAddress[17];
-    strcpy(nextAddress, address);
-    int len = strlen(nextAddress);
     nextAddress[len] = '0';
     nextAddress[len+1] = '\0';
     PrintTable(root->childs[0],nextAddress);
   }
   if(root->childs[1] != NULL){
-    char nextAddress[17];
-    strcpy(nextAddress, address);
-    int len = strlen(nextAddress);
     nextAddress[len] = '1';
     nextAddress[len+1] = '\0';
     PrintTable(root->childs[1],nextAddress);
