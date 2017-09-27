@@ -1,4 +1,6 @@
 #!/bin/bash
+# Atençao o script tem de ser lançado a partir da pasta p1 !!
+
 set -e
 if [ "$#" -ne 1 ]; then
     echo "Usage: t1.sh fileTree"
