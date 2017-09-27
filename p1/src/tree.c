@@ -41,5 +41,7 @@ void PrintTable(BinaryNode * root,char * address){
 }
 
 BinaryNode * readBinaryTreeFromFile(char * filePath){
+  FILE *file;
+  file = fopen(filePath, "r");
   return NULL;
 }
