@@ -26,22 +26,45 @@ int InsertPrefix(BinaryNode * root , char * address , int nextHoop){
     return 0;
 }
 
-void PrintTable(BinaryNode * root,char * address){
+
+
+void PrintTableRec(BinaryNode * root,char * address){
   char nextAddress[17];
   if(root->nextHoop!=-1){
-    printf("%16s %d\n",address,root->nextHoop);
+    if(strlen(address)==0){
+        printf("e %d\n",root->nextHoop);
+    }else{
+        printf("%s %d\n",address,root->nextHoop);
+    }
+
   }
   for (int i = 0; i < 2; i++) {
     if(root->childs[i] != NULL){
       sprintf(nextAddress,"%s%d",address,i);
-      PrintTable(root->childs[i],nextAddress);
+      PrintTableRec(root->childs[i],nextAddress);
     }
   }
+}
 
+void PrintTable(BinaryNode * root){
+    PrintTableRec(root,"");
 }
 
 BinaryNode * readBinaryTreeFromFile(char * filePath){
-  FILE *file;
-  file = fopen(filePath, "r");
-  return NULL;
+
+  char buffer[100];
+  char address[17];
+  int nextHoop;
+
+  FILE *file = fopen(filePath, "r");
+
+  fgets(buffer,100,file);
+  sscanf(buffer,"%s %d", address, &nextHoop);
+  BinaryNode * root = createBinaryTree(nextHoop);
+
+  while (fgets(buffer,100,file)!=NULL) {
+    sscanf(buffer,"%s %d", address, &nextHoop);
+    InsertPrefix(root,address,nextHoop);
+  }
+  return root;
 }

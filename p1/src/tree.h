@@ -21,6 +21,7 @@ int freeBinaryTree(BinaryNode * node);
 
 BinaryNode * readBinaryTreeFromFile(char * filePath);
 
-void PrintTable(BinaryNode * root,char * address);
+void PrintTable(BinaryNode * root);
+
 
 #endif

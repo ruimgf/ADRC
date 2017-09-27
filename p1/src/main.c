@@ -1,14 +1,16 @@
 #include "tree.h"
+#include <unistd.h>
 
-int main(){
-  BinaryNode * arvore;
+int main(int argc, char const *argv[]){
 
-  arvore = createBinaryTree(1);
-  InsertPrefix(arvore ,"0",2);
-  InsertPrefix(arvore ,"00",3);
-  InsertPrefix(arvore ,"10",4);
-  InsertPrefix(arvore ,"010",5);
-  InsertPrefix(arvore ,"1001",6);
-  InsertPrefix(arvore ,"1101",7);
-  PrintTable(arvore,"");
+  if(argc < 2){
+    printf("Usage : main.o [filename]\n");
+    exit(-1);
+  }
+
+  BinaryNode * root;
+  char filePath[100];
+  sprintf(filePath, "%s",argv[1]);
+  root = readBinaryTreeFromFile(filePath);
+  PrintTable(root);
 }
