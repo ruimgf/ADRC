@@ -71,23 +71,32 @@ BinaryNode * readBinaryTreeFromFile(char * filePath){
   return root;
 }
 
+int LookUp_rec(BinaryNode* root, char * address, int previus_hoop){
+  int code_bit = address[0] - '0';
+  if(root->nextHoop != -1){
+    previus_hoop = root->nextHoop;
+  }
+  if(root->childs[code_bit] != NULL){  
+    previus_hoop = LookUp_rec(root->childs[code_bit], &address[1],previus_hoop);
+  }
+  return previus_hoop;
+}
 
 int LookUp(BinaryNode * root,char * address){
   int nextHoop;
   BinaryNode * aux;
   aux = root;
-  int index=0;
   int child;
-  while(aux!=NULL){
-      child = address[index] - '0';
-      aux = aux->childs[child];
-      if(aux->nextHoop!=-1){
-        nextHoop = aux->nextHoop;
-      }
-      if(address[index+1]=='\0'){
-          return nextHoop;
-      }
-      index++;
+  for (int i = 0; i < strlen(address); i++) {
+    if(aux->nextHoop!=-1){
+      nextHoop = aux->nextHoop;
+    }
+    child = address[i] - '0';
+    aux = aux->childs[child];
+    if(aux==NULL)
+      break;
   }
-  return -1;
+  return nextHoop;
+
+
 }
