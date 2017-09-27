@@ -50,6 +50,8 @@ void PrintTable(BinaryNode * root){
     PrintTableRec(root,"");
 }
 
+
+
 BinaryNode * readBinaryTreeFromFile(char * filePath){
 
   char buffer[100];
@@ -67,4 +69,25 @@ BinaryNode * readBinaryTreeFromFile(char * filePath){
     InsertPrefix(root,address,nextHoop);
   }
   return root;
+}
+
+
+int LookUp(BinaryNode * root,char * address){
+  int nextHoop;
+  BinaryNode * aux;
+  aux = root;
+  int index=0;
+  int child;
+  while(aux!=NULL){
+      child = address[index] - '0';
+      aux = aux->childs[child];
+      if(aux->nextHoop!=-1){
+        nextHoop = aux->nextHoop;
+      }
+      if(address[index+1]=='\0'){
+          return nextHoop;
+      }
+      index++;
+  }
+  return -1;
 }

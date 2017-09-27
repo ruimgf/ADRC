@@ -23,5 +23,7 @@ BinaryNode * readBinaryTreeFromFile(char * filePath);
 
 void PrintTable(BinaryNode * root);
 
+int LookUp(BinaryNode * root,char * address);
+
 
 #endif
