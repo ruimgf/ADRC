@@ -15,7 +15,11 @@ BinaryNode * createBinaryTree(int nextHoop){
 int InsertPrefix(BinaryNode * root , char * address , int nextHoop){
     int index = address[0] - '0';
     if(address[1]=='\0'){
-        root->childs[index] = createBinaryTree(nextHoop);
+        if(root->childs[index]==NULL){
+            root->childs[index] = createBinaryTree(nextHoop);
+        }else{
+          root->childs[index]->nextHoop = nextHoop;
+        }
         return 1;
     }else{
       if(root->childs[index]==NULL){
@@ -59,10 +63,7 @@ BinaryNode * readBinaryTreeFromFile(char * filePath){
   int nextHoop;
 
   FILE *file = fopen(filePath, "r");
-
-  fgets(buffer,100,file);
-  sscanf(buffer,"%s %d", address, &nextHoop);
-  BinaryNode * root = createBinaryTree(nextHoop);
+  BinaryNode * root = createBinaryTree(-1);
 
   while (fgets(buffer,100,file)!=NULL) {
     sscanf(buffer,"%s %d", address, &nextHoop);
@@ -76,7 +77,7 @@ int LookUp_rec(BinaryNode* root, char * address, int previus_hoop){
   if(root->nextHoop != -1){
     previus_hoop = root->nextHoop;
   }
-  if(root->childs[code_bit] != NULL){  
+  if(root->childs[code_bit] != NULL){
     previus_hoop = LookUp_rec(root->childs[code_bit], &address[1],previus_hoop);
   }
   return previus_hoop;
