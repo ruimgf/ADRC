@@ -76,6 +76,8 @@ BinaryNode * readBinaryTreeFromFile(char * filePath){
     sscanf(buffer,"%s %d", address, &nextHoop);
     InsertPrefix(root,address,nextHoop);
   }
+
+  fclose(file);
   return root;
 }
 
