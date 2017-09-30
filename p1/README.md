@@ -12,11 +12,11 @@ p // Prints Prefix Tree
 ```
 
 ``` 
-i [prefix] [nextHoop] // Insert a prefix in tree: 
+i [prefix] [nextHoop] // Insert a prefix in tree
 ```
 
 ``` 
-d [prefix] // Delete a prefix from tree: 
+d [prefix] // Delete a prefix from tree
 ```
 
 ``` 
