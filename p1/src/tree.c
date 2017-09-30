@@ -110,21 +110,14 @@ int LookUp(BinaryNode * root,char * address){
 }
 
 //TODO check this
+//TODO Simplifiquei isto, vejam se concordam
 int freeBinaryTree(BinaryNode * root){
-
-  if(root->childs[0]!=NULL){
-    freeBinaryTree(root->childs[0]);
-  }
-  if(root->childs[1]!=NULL){
-    freeBinaryTree(root->childs[1]);
-  }
 
   for (int i = 0; i < 2; i++) {
     if(root->childs[i]!=NULL){
-      free(root->childs[i]);
-      root->childs[i] = NULL;
+      freeBinaryTree(root->childs[i]);
     }
   }
-
+  free(root);
   return 1;
 }
