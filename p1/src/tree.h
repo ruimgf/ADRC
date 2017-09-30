@@ -15,15 +15,17 @@ BinaryNode * createBinaryTree();
 
 int InsertPrefix(BinaryNode * root , char * address , int nextHoop);
 
-int removeNode(BinaryNode * previous_node, int to_remove);
+int removeNode(BinaryNode * previous_node, int to_remove); // TODO
 
-int freeBinaryTree(BinaryNode * node);
+int freeBinaryTree(BinaryNode * node); // TODO
 
 BinaryNode * readBinaryTreeFromFile(char * filePath);
 
 void PrintTable(BinaryNode * root);
 
 int LookUp(BinaryNode * root,char * address);
+
 int LookUp_rec(BinaryNode* root, char * address, int previus_hoop);
+
 
 #endif

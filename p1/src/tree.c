@@ -98,6 +98,15 @@ int LookUp(BinaryNode * root,char * address){
       break;
   }
   return nextHoop;
+}
 
-
+int freeBinaryTree(BinaryNode * root){
+  for(int i = 0 ; i < 2 ; i++){
+    if(root->childs[i]!= NULL){
+      freeBinaryTree(root->childs[i]);
+    }else{
+      free(root->childs[i]);
+    }
+  }
+  return 1;
 }
