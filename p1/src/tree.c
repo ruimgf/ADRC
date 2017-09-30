@@ -10,7 +10,14 @@ BinaryNode * createBinaryTree(int nextHoop){
   return root;
 }
 
-
+int HasChilds(BinaryNode * node){
+  for(int i = 0;i<2;i++){
+    if(node->childs[i]!= NULL){
+      return 1;
+    }
+  }
+  return 0;
+}
 
 int InsertPrefix(BinaryNode * root , char * address , int nextHoop){
     int index = address[0] - '0';
@@ -101,12 +108,20 @@ int LookUp(BinaryNode * root,char * address){
 }
 
 int freeBinaryTree(BinaryNode * root){
-  for(int i = 0 ; i < 2 ; i++){
-    if(root->childs[i]!= NULL){
-      freeBinaryTree(root->childs[i]);
-    }else{
+
+  if(root->childs[0]!=NULL){
+    freeBinaryTree(root->childs[0]);
+  }
+  if(root->childs[1]!=NULL){
+    freeBinaryTree(root->childs[1]);
+  }
+
+  for (int i = 0; i < 2; i++) {
+    if(root->childs[i]!=NULL){
       free(root->childs[i]);
+      root->childs[i] = NULL;
     }
   }
+
   return 1;
 }

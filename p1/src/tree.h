@@ -17,7 +17,7 @@ int InsertPrefix(BinaryNode * root , char * address , int nextHoop);
 
 int removeNode(BinaryNode * previous_node, int to_remove); // TODO
 
-int freeBinaryTree(BinaryNode * node); // TODO
+int freeBinaryTree(BinaryNode * node);
 
 BinaryNode * readBinaryTreeFromFile(char * filePath);
 
