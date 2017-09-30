@@ -109,6 +109,7 @@ int LookUp(BinaryNode * root,char * address){
   return nextHoop;
 }
 
+//TODO check this
 int freeBinaryTree(BinaryNode * root){
 
   if(root->childs[0]!=NULL){
