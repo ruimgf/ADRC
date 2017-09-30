@@ -15,5 +15,5 @@ int main(int argc, char const *argv[]){
   root = readBinaryTreeFromFile(filePath);
   PrintTable(root);
   freeBinaryTree(root);
-
+  free(root);
 }
