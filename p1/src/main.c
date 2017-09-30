@@ -14,7 +14,6 @@ int main(int argc, char const *argv[]){
   sprintf(filePath, "%s",argv[1]);
   root = readBinaryTreeFromFile(filePath);
   PrintTable(root);
-  //freeBinaryTree(root);
-  PrintTable(root);
+  freeBinaryTree(root);
 
 }
