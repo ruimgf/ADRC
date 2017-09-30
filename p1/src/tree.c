@@ -70,7 +70,7 @@ BinaryNode * readBinaryTreeFromFile(char * filePath){
   int nextHoop;
 
   FILE *file = fopen(filePath, "r");
-  BinaryNode * root = createBinaryTree(0);
+  BinaryNode * root = createBinaryTree(-1);
 
   while (fgets(buffer,100,file)!=NULL) {
     sscanf(buffer,"%s %d", address, &nextHoop);
