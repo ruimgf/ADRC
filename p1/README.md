@@ -24,6 +24,5 @@ l [address] // LookUp for nextHoop for that address
 ```
 
 ``` 
-pp // prints to screen the corresponding prefix table
-of even length prefixes
+pp // prints the corresponding prefix table of even length prefixes
 ```
