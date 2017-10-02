@@ -46,7 +46,7 @@ int main(int argc, char const *argv[]){
           break;
         case 'd':
           if(sscanf(args, "%c %s", &arg0, arg1) == 2) {
-            //DeletePrefix(root, arg1);
+            DeletePrefix(root, arg1);
             printf("Prefix %s was deleted!", arg1);
           } else {
             Help();

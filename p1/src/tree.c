@@ -109,6 +109,46 @@ int LookUp(BinaryNode * root,char * address){
   return nextHoop;
 }
 
+
+
+void DeletePrefix(BinaryNode * root, char * prefix){
+  BinaryNode * aux;
+  BinaryNode * father;
+  int childNr;
+  int stop = 0;
+  int len = strlen(prefix);
+  aux = root;
+  father = NULL;
+  while(!stop){
+    aux = root;
+    for (int i = 0; i < len; i++) {
+      childNr = prefix[i] - '0';
+      if(aux->childs[childNr]==NULL)
+        break;
+      father = aux;
+      aux = aux->childs[childNr];
+    }
+    printf("%d\n",aux->nextHoop);
+    printf("%d\n",father->nextHoop);
+    if(len==strlen(prefix)){
+      printf("1\n");
+      free(aux);
+      father->childs[prefix[len-1]-'0'] = NULL;
+    }else{
+      if(aux->nextHoop!=-1 && aux->childs[0]==NULL && aux->childs[1]==NULL ){
+        printf("2\n");
+        free(aux);
+        father->childs[prefix[len-1]-'0'] = NULL;
+      }else{
+        stop=1;
+      }
+    }
+    len--;
+  }
+
+
+}
+
 //TODO check this
 //TODO Simplifiquei isto, vejam se concordam
 int freeBinaryTree(BinaryNode * root){

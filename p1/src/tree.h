@@ -29,4 +29,5 @@ int LookUp_rec(BinaryNode* root, char * address, int previus_hoop);
 
 int HasChilds(BinaryNode * node);
 
+void DeletePrefix(BinaryNode * root, char * prefix);
 #endif
