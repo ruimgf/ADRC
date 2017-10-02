@@ -27,13 +27,14 @@ int main(int argc, char const *argv[]){
 
   while(quit){
 
-    printf(">> ");
+    printf(" >> ");
     fgets(args, 100, stdin);
 
     if(sscanf(args, "%c", &arg0) == 1) {
       switch(arg0) {
 
         case 'p':
+          printf("Prefix table: \n");
           PrintTable(root);
           break;
         case 'i':
@@ -47,7 +48,7 @@ int main(int argc, char const *argv[]){
         case 'd':
           if(sscanf(args, "%c %s", &arg0, arg1) == 2) {
             DeletePrefix(root, arg1);
-            printf("Prefix %s was deleted!", arg1);
+            printf("Prefix %s was deleted!\n", arg1);
           } else {
             Help();
           }
@@ -60,6 +61,7 @@ int main(int argc, char const *argv[]){
           }
           break;
         case 'e':
+          printf("Prefix table Even: \n");
           binaryToTwoBit(root,root_twobit,"");
           printTableEven(root_twobit,"");
           break;
