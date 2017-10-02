@@ -2,7 +2,7 @@ CC = gcc
 CFLAGS  = -Wall -std=c99 -g
 TARGET = main
 
-DEPS = obj/tree.o obj/two_tree.o
+DEPS = tree.o two_tree.o
 
 all: $(TARGET)
 
@@ -13,7 +13,7 @@ two_tree.o : src/two_tree.c src/two_tree.h
 	$(CC) $(CFLAGS) -c src/two_tree.c -o obj/two_tree.o
 
 $(TARGET): src/$(TARGET).c $(DEPS)
-	$(CC) $(CFLAGS) src/$(TARGET).c $(DEPS) -o $(TARGET).o
+	$(CC) $(CFLAGS) src/$(TARGET).c obj/tree.o obj/two_tree.o -o $(TARGET).o
 
 clean:
 	$(RM) *.o *~ obj/*.o

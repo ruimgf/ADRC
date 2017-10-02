@@ -20,5 +20,5 @@ int freeTwoTree(Node * root);
 void printTableEven(Node * root, char* address);
 
 void binaryToTwoBit(BinaryNode* root_binary, Node* root_twobit, char* address);
-
+char* translateIndexToBit(int index);
 #endif

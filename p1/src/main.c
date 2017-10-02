@@ -11,11 +11,14 @@ int main(int argc, char const *argv[]){
   }
 
   BinaryNode * root;
+  Node * root_twobit = createTwoTree(-1);
   char filePath[100];
   sprintf(filePath, "%s",argv[1]);
   root = readBinaryTreeFromFile(filePath);
   PrintTable(root);
-  freeBinaryTree(root);
+  
+  binaryToTwoBit(root,root_twobit,"");
+  printf("======\n");
+  printTableEven(root_twobit,"");
 
-                                  
 }

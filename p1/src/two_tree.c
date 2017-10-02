@@ -65,27 +65,20 @@ int insertPrefixTwoTree(Node* root,char* address,int nextHoop){
   }
 
   if(root->childs[translateBitToIndex(address)] == NULL){//If empty insert node and then jump to the new
-    root->childs[translateBitToIndex(address)] = createTwoTree(nextHoop);
-    return insertPrefixTwoTree(root->childs[translateBitToIndex(address)], &address[2], -1);
-  }else{//if not just jump to that node
-    return insertPrefixTwoTree(root->childs[translateBitToIndex(address)], &address[2], nextHoop);
+    root->childs[translateBitToIndex(address)] = createTwoTree(-1);
   }
-
+  return insertPrefixTwoTree(root->childs[translateBitToIndex(address)], &address[2], nextHoop);
   return 0;
 }
 
 void printTableEven(Node * root,char * address){
   char nextAddress[17];
   if(root->nextHoop!=-1){
-    if(strlen(address)==0){
-        printf("e %d\n",root->nextHoop);
-    }else{
-        printf("%s %d\n",address,root->nextHoop);
-    }
-
+      printf("%s %d\n",address,root->nextHoop);
   }
   for (int i = 0; i < 4; i++) {
     if(root->childs[i] != NULL){
+
       sprintf(nextAddress, "%s%s", address, translateIndexToBit(i) );
       printTableEven(root->childs[i], nextAddress);
     }
@@ -93,7 +86,7 @@ void printTableEven(Node * root,char * address){
   return;
 }
 
-int freeTwoTree(Node* root){
+int freeTwoTree(Node * root){
 
   for (int i = 0; i < 4; i++) {
     if(root->childs[i]!=NULL){
@@ -104,6 +97,8 @@ int freeTwoTree(Node* root){
   return 1;
 }
 
+
+
 void binaryToTwoBit(BinaryNode* root_binary, Node* root_twobit, char* address){
   char nextAddress[17];
   for(int i = 0;i<2;i++){
@@ -113,15 +108,29 @@ void binaryToTwoBit(BinaryNode* root_binary, Node* root_twobit, char* address){
     }
   }
 
-  if(root_twobit->nextHoop == -1){
-    return; // we dont insert nodes without anny hoop
+  if(root_binary->nextHoop != -1){
+    if(strlen(address)%2 == 0){//we are in a even address we can insert with no problems
+    
+      insertPrefixTwoTree(root_twobit,address,root_binary->nextHoop);
+    }else{//we are in a odd address so we have to dicide
+      char tempAddress[17];
+      for(int i = 0;i<2;i++){
+        if(root_binary->childs[i]!= NULL){
+          if(root_binary->childs[i]->nextHoop == -1){
+            sprintf(tempAddress,"%s%d",address,i);
+
+            insertPrefixTwoTree(root_twobit,tempAddress,root_binary->nextHoop);
+          }
+        }else{
+          sprintf(tempAddress,"%s%d",address,i);
+
+          insertPrefixTwoTree(root_twobit,tempAddress,root_binary->nextHoop);
+        }
+      }
+    }
   }
 
-  if(strlen(address)%2 == 0){//we are in a even address we can insert with no problems
-    insertPrefixTwoTree(root_twobit,address,root_binary->nextHoop);
-  }else{//we are in a odd address so we have to dicide
 
-  }
 
 
 }
