@@ -38,6 +38,8 @@ char* translateIndexToBit(int index){
 
 }
 
+
+
 Node * createTwoTree(int root_nextHoop){
   Node* root;
   root = (Node*)malloc(sizeof(Node));
@@ -100,4 +102,26 @@ int freeTwoTree(Node* root){
   }
   free(root);
   return 1;
+}
+
+void binaryToTwoBit(BinaryNode* root_binary, Node* root_twobit, char* address){
+  char nextAddress[17];
+  for(int i = 0;i<2;i++){
+    if(root_binary->childs[i] != NULL){
+      sprintf(nextAddress,"%s%d",address,i);
+      binaryToTwoBit(root_binary->childs[i],root_twobit,nextAddress);
+    }
+  }
+
+  if(root_twobit->nextHoop == -1){
+    return; // we dont insert nodes without anny hoop
+  }
+
+  if(strlen(address)%2 == 0){//we are in a even address we can insert with no problems
+    insertPrefixTwoTree(root_twobit,address,root_binary->nextHoop);
+  }else{//we are in a odd address so we have to dicide
+
+  }
+
+
 }

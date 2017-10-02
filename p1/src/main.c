@@ -17,5 +17,5 @@ int main(int argc, char const *argv[]){
   PrintTable(root);
   freeBinaryTree(root);
 
-  
+                                  
 }
