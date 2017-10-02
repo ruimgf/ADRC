@@ -64,9 +64,9 @@ int InsertPrefixTwoTree(Node* root;char* address;int nextHoop){
 
   if(root->childs[TranslateBitToIndex(address)] == NULL){//If empty insert node and then jump to the new
     root->childs[TranslateBitToIndex(address)] = createTwoTree(nextHoop);
-    return InsertPrefix(root->childs[TranslateBitToIndex(address)], &address[2], -1);
+    return InsertPrefixTwoTree(root->childs[TranslateBitToIndex(address)], &address[2], -1);
   }else{//if not just jump to that node
-    return InsertPrefix(root->childs[TranslateBitToIndex(address)], &address[2], nextHoop);
+    return InsertPrefixTwoTree(root->childs[TranslateBitToIndex(address)], &address[2], nextHoop);
   }
 
   return 0;
