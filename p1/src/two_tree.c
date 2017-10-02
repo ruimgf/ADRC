@@ -1,7 +1,7 @@
 #include "two_tree.h"
 
 //function that receive a address and analyses the first two bits, assume that address its a string with at least two entries
-int TranslateBitToIndex(char* address){
+int translateBitToIndex(char* address){
   if(address[0] == '0'){
     if(address[1] == '0'){
       return 0;
@@ -17,7 +17,7 @@ int TranslateBitToIndex(char* address){
   }
 }
 
-char* TranslateIndexToBit(int index){
+char* translateIndexToBit(int index){
   if(index == 0){
     return "00";
   }
@@ -51,28 +51,28 @@ Node * createTwoTree(int root_nextHoop){
 
 }
 
-int InsertPrefixTwoTree(Node* root;char* address;int nextHoop){
+int insertPrefixTwoTree(Node* root,char* address,int nextHoop){
 
   if(address[2] == '\0'){//reach the position to insert
-    if(root->childs[TranslateBitToIndex(address)] == NULL){//If empty insert
-      root->childs[TranslateBitToIndex(address)] = createTwoTree(nextHoop);
+    if(root->childs[translateBitToIndex(address)] == NULL){//If empty insert
+      root->childs[translateBitToIndex(address)] = createTwoTree(nextHoop);
     }else{//if not just change the number, because previously it was empty
-      root->childs[TranslateBitToIndex(address)]->nextHoop = nextHoop;
+      root->childs[translateBitToIndex(address)]->nextHoop = nextHoop;
     }
     return 1;
   }
 
-  if(root->childs[TranslateBitToIndex(address)] == NULL){//If empty insert node and then jump to the new
-    root->childs[TranslateBitToIndex(address)] = createTwoTree(nextHoop);
-    return InsertPrefixTwoTree(root->childs[TranslateBitToIndex(address)], &address[2], -1);
+  if(root->childs[translateBitToIndex(address)] == NULL){//If empty insert node and then jump to the new
+    root->childs[translateBitToIndex(address)] = createTwoTree(nextHoop);
+    return insertPrefixTwoTree(root->childs[translateBitToIndex(address)], &address[2], -1);
   }else{//if not just jump to that node
-    return InsertPrefixTwoTree(root->childs[TranslateBitToIndex(address)], &address[2], nextHoop);
+    return insertPrefixTwoTree(root->childs[translateBitToIndex(address)], &address[2], nextHoop);
   }
 
   return 0;
 }
 
-void PrintTableEven(Node * root,char * address){
+void printTableEven(Node * root,char * address){
   char nextAddress[17];
   if(root->nextHoop!=-1){
     if(strlen(address)==0){
@@ -84,8 +84,8 @@ void PrintTableEven(Node * root,char * address){
   }
   for (int i = 0; i < 4; i++) {
     if(root->childs[i] != NULL){
-      sprintf(nextAddress, "%s%s", address, TranslateIndexToBit(i) );
-      PrintTableEven(root->childs[i], nextAddress);
+      sprintf(nextAddress, "%s%s", address, translateIndexToBit(i) );
+      printTableEven(root->childs[i], nextAddress);
     }
   }
   return;

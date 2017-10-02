@@ -1,6 +1,6 @@
 #include "tree.h"
 #include <unistd.h>
-#include "tow_tree.h"
+#include "two_tree.h"
 
 int main(int argc, char const *argv[]){
   //char buffer[100];
@@ -16,4 +16,6 @@ int main(int argc, char const *argv[]){
   root = readBinaryTreeFromFile(filePath);
   PrintTable(root);
   freeBinaryTree(root);
+
+  
 }

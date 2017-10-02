@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
+#include "tree.h"
 
 typedef struct Node{
   int nextHoop;
@@ -12,10 +13,11 @@ typedef struct Node{
 
 Node * createTwoTree(int root_nextHoop);
 
-int InsertPrefixTwoTree(Node* root , char* address , int nextHoop);
+int insertPrefixTwoTree(Node* root , char* address , int nextHoop);
 
 int freeTwoTree(Node * root);
 
-void PrintTableEven(Node * root);
+void printTableEven(Node * root, char* address);
 
+void binaryToTwoBit(BinaryNode* root_binary, Node* root_twobit, char* address);
 #endif
