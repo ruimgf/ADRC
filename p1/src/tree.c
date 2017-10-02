@@ -113,7 +113,7 @@ int LookUp(BinaryNode * root,char * address){
 
 void DeletePrefix(BinaryNode * root, char * prefix){
   BinaryNode * aux;
-  BinaryNode ** father;
+  BinaryNode ** father; // vai armazenar um poteiro para o poteiro que da a root da arvore que se pode apagar
   int childNr;
 
   int len = strlen(prefix);
@@ -128,7 +128,7 @@ void DeletePrefix(BinaryNode * root, char * prefix){
     }
     aux = aux->childs[childNr];
   }
-  if(aux->childs[0] != NULL && aux->childs[1] != NULL){ // é uma folha
+  if(aux->childs[0] == NULL && aux->childs[1] == NULL){ // é uma folha
       freeBinaryTree(*father);
       *father = NULL;
   }else{
