@@ -113,38 +113,29 @@ int LookUp(BinaryNode * root,char * address){
 
 void DeletePrefix(BinaryNode * root, char * prefix){
   BinaryNode * aux;
-  BinaryNode * father;
+  BinaryNode ** father;
   int childNr;
-  int stop = 0;
+
   int len = strlen(prefix);
   aux = root;
   father = NULL;
-  while(!stop){
-    aux = root;
-    for (int i = 0; i < len; i++) {
-      childNr = prefix[i] - '0';
-      if(aux->childs[childNr]==NULL)
-        break;
-      father = aux;
-      aux = aux->childs[childNr];
+  for (int i = 0; i < len; i++) {
+    childNr = prefix[i] - '0';
+    if(aux->childs[childNr]==NULL)
+      break;
+    if(aux->nextHoop != -1 || (aux->childs[0] != NULL && aux->childs[1] != NULL)){
+      father = &aux->childs[childNr];
     }
-    printf("%d\n",aux->nextHoop);
-    printf("%d\n",father->nextHoop);
-    if(len==strlen(prefix)){
-      printf("1\n");
-      free(aux);
-      father->childs[prefix[len-1]-'0'] = NULL;
-    }else{
-      if(aux->nextHoop!=-1 && aux->childs[0]==NULL && aux->childs[1]==NULL ){
-        printf("2\n");
-        free(aux);
-        father->childs[prefix[len-1]-'0'] = NULL;
-      }else{
-        stop=1;
-      }
-    }
-    len--;
+    aux = aux->childs[childNr];
   }
+  if(aux->childs[0] != NULL && aux->childs[1] != NULL){ // é uma folha
+      freeBinaryTree(*father);
+      *father = NULL;
+  }else{
+      aux->nextHoop = -1;
+  }
+
+
 
 
 }
