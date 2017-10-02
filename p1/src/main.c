@@ -1,5 +1,6 @@
 #include "tree.h"
 #include <unistd.h>
+#include "tow_tree.h"
 
 int main(int argc, char const *argv[]){
   //char buffer[100];
