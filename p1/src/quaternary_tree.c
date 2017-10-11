@@ -1,4 +1,4 @@
-#include "two_tree.h"
+#include "quaternary_tree.h"
 
 //function that receive a address and analyses the first two bits, assume that address its a string with at least two entries
 int translateBitToIndex(char* address){
