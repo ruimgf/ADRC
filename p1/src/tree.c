@@ -122,7 +122,7 @@ void DeletePrefix(BinaryNode * root, char * prefix){
   for (int i = 0; i < len; i++) {
     childNr = prefix[i] - '0';
     if(aux->childs[childNr]==NULL)
-      break;
+      return;
     if(aux->nextHoop != -1 || (aux->childs[0] != NULL && aux->childs[1] != NULL)){
       father = &aux->childs[childNr];
     }
