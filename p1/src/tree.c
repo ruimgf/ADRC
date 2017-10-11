@@ -1,10 +1,10 @@
 #include "tree.h"
 
-BinaryNode * createBinaryTree(int nextHoop){
+BinaryNode * createBinaryTree(int nextHop){
   BinaryNode * root;
   root = (BinaryNode*) malloc(sizeof(BinaryNode));
 
-  root->nextHoop = nextHoop; // TODO : confirmar com o professor
+  root->nextHop = nextHop; // TODO : confirmar com o professor
   root->childs[0] = NULL;
   root->childs[1] = NULL;
   return root;
@@ -19,20 +19,20 @@ int HasChilds(BinaryNode * node){
   return 0;
 }
 
-int InsertPrefix(BinaryNode * root , char * address , int nextHoop){
+int InsertPrefix(BinaryNode * root , char * address , int nextHop){
     int index = address[0] - '0';
     if(address[1]=='\0'){
         if(root->childs[index]==NULL){
-            root->childs[index] = createBinaryTree(nextHoop);
+            root->childs[index] = createBinaryTree(nextHop);
         }else{
-          root->childs[index]->nextHoop = nextHoop;
+          root->childs[index]->nextHop = nextHop;
         }
         return 1;
     }else{
       if(root->childs[index]==NULL){
         root->childs[index] = createBinaryTree(-1);
       }
-      InsertPrefix(root->childs[index], address+1 , nextHoop);
+      InsertPrefix(root->childs[index], address+1 , nextHop);
     }
     return 0;
 }
@@ -41,11 +41,11 @@ int InsertPrefix(BinaryNode * root , char * address , int nextHoop){
 
 void PrintTableRec(BinaryNode * root,char * address){
   char nextAddress[17];
-  if(root->nextHoop!=-1){
+  if(root->nextHop!=-1){
     if(strlen(address)==0){
-        printf("e %d\n",root->nextHoop);
+        printf("e %d\n",root->nextHop);
     }else{
-        printf("%s %d\n",address,root->nextHoop);
+        printf("%s %d\n",address,root->nextHop);
     }
 
   }
@@ -67,46 +67,46 @@ BinaryNode * readBinaryTreeFromFile(char * filePath){
 
   char buffer[100];
   char address[17];
-  int nextHoop;
+  int nextHop;
 
   FILE *file = fopen(filePath, "r");
   BinaryNode * root = createBinaryTree(-1);//TODO CHECK IF THE FGETS READS THE ROOT NODE
 
   while (fgets(buffer,100,file)!=NULL) {
-    sscanf(buffer,"%s %d", address, &nextHoop);
-    InsertPrefix(root,address,nextHoop);
+    sscanf(buffer,"%s %d", address, &nextHop);
+    InsertPrefix(root,address,nextHop);
   }
 
   fclose(file);
   return root;
 }
 
-int LookUp_rec(BinaryNode* root, char * address, int previus_hoop){
+int LookUp_rec(BinaryNode* root, char * address, int previus_Hop){
   int code_bit = address[0] - '0';
-  if(root->nextHoop != -1){
-    previus_hoop = root->nextHoop;
+  if(root->nextHop != -1){
+    previus_Hop = root->nextHop;
   }
   if(root->childs[code_bit] != NULL){
-    previus_hoop = LookUp_rec(root->childs[code_bit], &address[1],previus_hoop);
+    previus_Hop = LookUp_rec(root->childs[code_bit], &address[1],previus_Hop);
   }
-  return previus_hoop;
+  return previus_Hop;
 }
 
 int LookUp(BinaryNode * root,char * address){
-  int nextHoop;
+  int nextHop;
   BinaryNode * aux;
   aux = root;
   int child;
   for (int i = 0; i < strlen(address); i++) {
-    if(aux->nextHoop!=-1){
-      nextHoop = aux->nextHoop;
+    if(aux->nextHop!=-1){
+      nextHop = aux->nextHop;
     }
     child = address[i] - '0';
     aux = aux->childs[child];
     if(aux==NULL)
       break;
   }
-  return nextHoop;
+  return nextHop;
 }
 
 
@@ -123,7 +123,7 @@ void DeletePrefix(BinaryNode * root, char * prefix){
     childNr = prefix[i] - '0';
     if(aux->childs[childNr]==NULL)
       return;
-    if(aux->nextHoop != -1 || (aux->childs[0] != NULL && aux->childs[1] != NULL)){
+    if(aux->nextHop != -1 || (aux->childs[0] != NULL && aux->childs[1] != NULL)){
       father = &aux->childs[childNr];
     }
     aux = aux->childs[childNr];
@@ -132,7 +132,7 @@ void DeletePrefix(BinaryNode * root, char * prefix){
       freeBinaryTree(*father);
       *father = NULL;
   }else{
-      aux->nextHoop = -1;
+      aux->nextHop = -1;
   }
 
 

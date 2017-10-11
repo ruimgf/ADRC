@@ -6,14 +6,14 @@
 #include <stdio.h>
 
 typedef struct BinaryNode_{
-  int nextHoop;
+  int nextHop;
   struct BinaryNode_ * childs[2]; //If we go right it means that adress is 1 for that bit //If we go left it means that address is 0 for that bit
 }BinaryNode;
 
 
 BinaryNode * createBinaryTree();
 
-int InsertPrefix(BinaryNode * root , char * address , int nextHoop);
+int InsertPrefix(BinaryNode * root , char * address , int nextHop);
 
 int removeNode(BinaryNode * previous_node, int to_remove); // TODO
 
@@ -25,7 +25,7 @@ void PrintTable(BinaryNode * root);
 
 int LookUp(BinaryNode * root,char * address);
 
-int LookUp_rec(BinaryNode* root, char * address, int previus_hoop);
+int LookUp_rec(BinaryNode* root, char * address, int previus_Hop);
 
 int HasChilds(BinaryNode * node);
 
