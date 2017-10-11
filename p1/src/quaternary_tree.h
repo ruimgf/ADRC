@@ -11,14 +11,14 @@ typedef struct Node{
   struct Node* childs[4]; //If we go right it means that adress is 1 for that bit //If we go left it means that address is 0 for that bit
 }Node;
 
-Node * createTwoTree(int root_nextHop);
+Node * createQuaternaryTree(int root_nextHop);
 
-int insertPrefixTwoTree(Node* root , char* address , int nextHop);
+int insertPrefixQuaternaryTree(Node* root , char* address , int nextHop);
 
-int freeTwoTree(Node * root);
+int freeQuaternaryTree(Node * root);
 
 void printTableEven(Node * root, char* address);
 
-void binaryToTwoBit(BinaryNode* root_binary, Node* root_twobit, char* address);
+void binaryToQuaternaryTree(BinaryNode* root_binary, Node* root_twobit, char* address);
 
 #endif

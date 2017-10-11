@@ -1,15 +1,18 @@
-#include "tree.h"
 #include <unistd.h>
-#include "two_tree.h"
+#include "tree.h"
+#include "quaternary_tree.h"
 
 void Help() {
-  printf("Invalid command!\n");
+  printf("\n\nCommand list:\n");
+  printf("  p -> Prints Prefix Tree\n");
+  printf("  i [prefix] [nextHop] -> Insert a prefix in tree\n");
+  printf("  d [prefix] -> Delete a prefix from tree\n");
+  printf("  l [address] -> LookUp for nextHop for that address\n");
+  printf("  e -> Prints the corresponding Prefix Table of even length prefixes\n");
+  printf("  q -> quit the program\n\n");
 }
 
 int main(int argc, char const *argv[]){
-  //char buffer[100];
-  //char command[100];
-
 
   if(argc != 2){
     printf("Usage : main.o [filename]\n");
@@ -20,7 +23,7 @@ int main(int argc, char const *argv[]){
   int arg2, quit = 1;
 
   BinaryNode * root;
-  Node * root_twobit = createTwoTree(-1);
+  Node * root_twobit = createQuaternaryTree(-1);
   char filePath[100];
   sprintf(filePath, "%s",argv[1]);
   root = readBinaryTreeFromFile(filePath);
@@ -62,7 +65,7 @@ int main(int argc, char const *argv[]){
           break;
         case 'e':
           printf("Prefix table Even: \n");
-          binaryToTwoBit(root,root_twobit,"");
+          binaryToQuaternaryTree(root,root_twobit,"");
           printTableEven(root_twobit,"");
           break;
         case 'q':

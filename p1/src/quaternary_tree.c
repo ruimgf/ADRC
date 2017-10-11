@@ -40,7 +40,7 @@ char* translateIndexToBit(int index){
 
 
 
-Node * createTwoTree(int root_nextHop){
+Node * createQuaternaryTree(int root_nextHop){
   Node* root;
   root = (Node*)malloc(sizeof(Node));
 
@@ -53,11 +53,11 @@ Node * createTwoTree(int root_nextHop){
 
 }
 
-int insertPrefixTwoTree(Node* root,char* address,int nextHop){
+int insertPrefixQuaternaryTree(Node* root,char* address,int nextHop){
 
   if(address[2] == '\0'){//reach the position to insert
     if(root->childs[translateBitToIndex(address)] == NULL){//If empty insert
-      root->childs[translateBitToIndex(address)] = createTwoTree(nextHop);
+      root->childs[translateBitToIndex(address)] = createQuaternaryTree(nextHop);
     }else{//if not just change the number, because previously it was empty
       root->childs[translateBitToIndex(address)]->nextHop = nextHop;
     }
@@ -65,9 +65,9 @@ int insertPrefixTwoTree(Node* root,char* address,int nextHop){
   }
 
   if(root->childs[translateBitToIndex(address)] == NULL){//If empty insert node and then jump to the new
-    root->childs[translateBitToIndex(address)] = createTwoTree(-1);
+    root->childs[translateBitToIndex(address)] = createQuaternaryTree(-1);
   }
-  return insertPrefixTwoTree(root->childs[translateBitToIndex(address)], &address[2], nextHop);
+  return insertPrefixQuaternaryTree(root->childs[translateBitToIndex(address)], &address[2], nextHop);
   return 0;
 }
 
@@ -86,11 +86,11 @@ void printTableEven(Node * root,char * address){
   return;
 }
 
-int freeTwoTree(Node * root){
+int freeQuaternaryTree(Node * root){
 
   for (int i = 0; i < 4; i++) {
     if(root->childs[i]!=NULL){
-      freeTwoTree(root->childs[i]);
+      freeQuaternaryTree(root->childs[i]);
     }
   }
   free(root);
@@ -98,18 +98,18 @@ int freeTwoTree(Node * root){
 }
 
 
-void binaryToTwoBit(BinaryNode* root_binary, Node* root_twobit, char* address){
+void binaryToQuaternaryTree(BinaryNode* root_binary, Node* root_twobit, char* address){
   char nextAddress[17];
   for(int i = 0;i<2;i++){
     if(root_binary->childs[i] != NULL){
       sprintf(nextAddress,"%s%d",address,i);
-      binaryToTwoBit(root_binary->childs[i],root_twobit,nextAddress);
+      binaryToQuaternaryTree(root_binary->childs[i],root_twobit,nextAddress);
     }
   }
 
   if(root_binary->nextHop != -1){
     if(strlen(address)%2 == 0){//we are in a even address we can insert with no problems
-      insertPrefixTwoTree(root_twobit,address,root_binary->nextHop);
+      insertPrefixQuaternaryTree(root_twobit,address,root_binary->nextHop);
     }else{//we are in a odd address so we have to dicide
       char tempAddress[17];
       for(int i = 0;i<2;i++){
@@ -117,18 +117,15 @@ void binaryToTwoBit(BinaryNode* root_binary, Node* root_twobit, char* address){
           if(root_binary->childs[i]->nextHop == -1){
             sprintf(tempAddress,"%s%d",address,i);
 
-            insertPrefixTwoTree(root_twobit,tempAddress,root_binary->nextHop);
+            insertPrefixQuaternaryTree(root_twobit,tempAddress,root_binary->nextHop);
           }
         }else{
           sprintf(tempAddress,"%s%d",address,i);
 
-          insertPrefixTwoTree(root_twobit,tempAddress,root_binary->nextHop);
+          insertPrefixQuaternaryTree(root_twobit,tempAddress,root_binary->nextHop);
         }
       }
     }
   }
-
-
-
 
 }
