@@ -8,7 +8,7 @@ BinaryNode * createBinaryTree(int nextHop){
   BinaryNode * root;
   root = (BinaryNode*) malloc(sizeof(BinaryNode));
 
-  root->nextHop = nextHop; // TODO : confirmar com o professor
+  root->nextHop = nextHop;
   root->childs[0] = NULL;
   root->childs[1] = NULL;
   return root;
@@ -84,7 +84,7 @@ BinaryNode * readBinaryTreeFromFile(char * filePath){
   int nextHop;
 
   FILE *file = fopen(filePath, "r");
-  BinaryNode * root = createBinaryTree(-1);//TODO CHECK IF THE FGETS READS THE ROOT NODE
+  BinaryNode * root = createBinaryTree(-1);
 
   while (fgets(buffer,100,file)!=NULL) {
     sscanf(buffer,"%s %d", address, &nextHop);
@@ -133,23 +133,20 @@ void DeletePrefix(BinaryNode * root, char * prefix){
   aux = root;
   father = NULL;
   for (int i = 0; i < len; i++) {
-    childNr = prefix[i] - '0';
-    if(aux->childs[childNr]==NULL)
+    childNr = prefix[i] - '0'; // int to adress vector
+    if(aux->childs[childNr]==NULL) //prefixo não existe
       return;
-    if(aux->nextHop != -1 || (aux->childs[0] != NULL && aux->childs[1] != NULL)){
-      father = &aux->childs[childNr];
+    if(aux->nextHop != -1 || (aux->childs[0] != NULL && aux->childs[1] != NULL)){ // não tem saida nula ou tem mais que um filho
+      father = &aux->childs[childNr]; // modify root of tree to delete
     }
     aux = aux->childs[childNr];
   }
   if(aux->childs[0] == NULL && aux->childs[1] == NULL){ // é uma folha
       freeBinaryTree(*father);
       *father = NULL;
-  }else{
+  }else{ // é um nó intermédio
       aux->nextHop = -1;
   }
-
-
-
 
 }
 
