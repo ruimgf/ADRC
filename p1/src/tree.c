@@ -1,5 +1,9 @@
 #include "tree.h"
-
+/**
+ * [createBinaryTree Function to create a New Binary Tree]
+ * @param  nextHop [nextHop for root Node]
+ * @return         [pointer to root Node]
+ */
 BinaryNode * createBinaryTree(int nextHop){
   BinaryNode * root;
   root = (BinaryNode*) malloc(sizeof(BinaryNode));
@@ -10,15 +14,13 @@ BinaryNode * createBinaryTree(int nextHop){
   return root;
 }
 
-int HasChilds(BinaryNode * node){
-  for(int i = 0;i<2;i++){
-    if(node->childs[i]!= NULL){
-      return 1;
-    }
-  }
-  return 0;
-}
-
+/**
+ * [InsertPrefix Function to insert a new prefix on tree]
+ * @param  root    [root node]
+ * @param  address [prefix to insert]
+ * @param  nextHop [nextHop for given prefix]
+ * @return         [description]
+ */
 int InsertPrefix(BinaryNode * root , char * address , int nextHop){
     int index = address[0] - '0';
     if(address[1]=='\0'){
@@ -38,7 +40,11 @@ int InsertPrefix(BinaryNode * root , char * address , int nextHop){
 }
 
 
-
+/**
+ * [PrintTableRec Function to print Prefix table]
+ * @param root    [root node]
+ * @param address [recursion argument]
+ */
 void PrintTableRec(BinaryNode * root,char * address){
   char nextAddress[17];
   if(root->nextHop!=-1){
@@ -57,12 +63,20 @@ void PrintTableRec(BinaryNode * root,char * address){
   }
 }
 
+/**
+ * [PrintTable PrintTable Interface to user]
+ * @param root [root node]
+ */
 void PrintTable(BinaryNode * root){
     PrintTableRec(root,"");
 }
 
 
-
+/**
+ * [readBinaryTreeFromFile Function to read a binary Tree from a prefix table in a file]
+ * @param  filePath [path to file]
+ * @return          [node root]
+ */
 BinaryNode * readBinaryTreeFromFile(char * filePath){
 
   char buffer[100];
@@ -81,17 +95,12 @@ BinaryNode * readBinaryTreeFromFile(char * filePath){
   return root;
 }
 
-int LookUp_rec(BinaryNode* root, char * address, int previus_Hop){
-  int code_bit = address[0] - '0';
-  if(root->nextHop != -1){
-    previus_Hop = root->nextHop;
-  }
-  if(root->childs[code_bit] != NULL){
-    previus_Hop = LookUp_rec(root->childs[code_bit], &address[1],previus_Hop);
-  }
-  return previus_Hop;
-}
-
+/**
+ * [LookUp Function to LookUp for next hop for an adress]
+ * @param  root    [root node]
+ * @param  address [address to search]
+ * @return         [nextHop]
+ */
 int LookUp(BinaryNode * root,char * address){
   int nextHop;
   BinaryNode * aux;
@@ -110,7 +119,11 @@ int LookUp(BinaryNode * root,char * address){
 }
 
 
-
+/**
+ * [DeletePrefix Function to delete a prefix]
+ * @param root   [root node]
+ * @param prefix [prefix to Delete]
+ */
 void DeletePrefix(BinaryNode * root, char * prefix){
   BinaryNode * aux;
   BinaryNode ** father; // vai armazenar um poteiro para o poteiro que da a root da arvore que se pode apagar
@@ -140,8 +153,11 @@ void DeletePrefix(BinaryNode * root, char * prefix){
 
 }
 
-//TODO check this
-//TODO Simplifiquei isto, vejam se concordam
+/**
+ * [freeBinaryTree Function to free Binary Tree]
+ * @param  root [root node]
+ * @return      [description]
+ */
 int freeBinaryTree(BinaryNode * root){
 
   for (int i = 0; i < 2; i++) {
