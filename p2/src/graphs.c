@@ -1,3 +1,5 @@
+#include "graphs.h"
+
 Edge EDGE(int v, int w) {
   Edge *eptr = (Edge *) malloc(sizeof(Edge)) ;
   eptr -> v = v;
@@ -15,12 +17,13 @@ link NEW(int v, link next) {
 
 Graph GRAPHinit(int V) {
   int v;
-  GraphG = (Graph) malloc(sizeof *G);
+
+  Graph G = (Graph) malloc(sizeof *G);
   G -> V = V;
   G -> E = 0;
   G -> adj = (link *) malloc(V * sizeof(link));
   for (v = 0; v < V; v++)
-  G -> adj[v] = NULL;
+    G -> adj[v] = NULL;
   return G;
 }
 
@@ -30,16 +33,4 @@ void GRAPHinsertE(Graph G, Edge e) {
   G -> adj[v] = NEW(w, G -> adj[v]);
   G -> adj[w] = NEW(v, G -> adj[w]);
   G -> E++;
-}
-
-Graph GRAPHrandp(int V, int E) {
-  int i, j;
-  double p = 2.0 * E / (V * (V - 1));
-  Graph G = GRAPHinit(V);
-  randini();
-  for (i = 0; i < V; i++)
-  for (j = 0; j <i; j++)
-  if (randlcg(1) < p)
-  GRAPHinsertE(G, EDGE(i, j));
-  return G;
 }

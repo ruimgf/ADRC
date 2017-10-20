@@ -1,4 +1,5 @@
-#include <staticAnalises.h>
+#include "staticAnalises.h"
+#include <stdio.h>
 
 int int main(int argc, char const *argv[]) {
 
@@ -11,8 +12,8 @@ int int main(int argc, char const *argv[]) {
   }
 
   sprintf(filePath, "%s",argv[1]);
-  
-  G = loadFromFile(char * filePath);
+
+  G = loadFromFile(filePath);
 
   return 0;
 }
