@@ -1,4 +1,8 @@
+#ifndef	GRAPH
+#define	GRAPH
 typedef struct {int v; int w;} Edge;
+
+
 Edge EDGE(int, int);
 
 typedef struct node *link;
@@ -17,5 +21,4 @@ int randV(Graph);
 Graph GRAPHrandE(int, int);
 Graph GRAPHrandp(int, int);
 
-
-
+#endif
