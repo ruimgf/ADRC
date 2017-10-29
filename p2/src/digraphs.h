@@ -15,9 +15,6 @@ struct node {int v; link next; int type};
 /* Adjacency list representation of a graph */
 typedef struct {int V; int E; link *adj;} *Graph;
 
-
-
-
 Edge EDGE(int, int, int);
 
 link NEW(int v, link next, int type);
