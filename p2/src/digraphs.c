@@ -1,4 +1,4 @@
-#include "graphs.h"
+#include "digraphs.h"
 
 Edge EDGE(int v, int w, int type) {
   Edge *eptr = (Edge *) malloc(sizeof(Edge)) ;

@@ -1,7 +1,7 @@
 #ifndef	STATIC_ANALISES
 #define	STATIC_ANALISES
 
-#include "graphs.h"
+#include "digraphs.h"
 
 Graph loadFromFile(char * filePath);
 

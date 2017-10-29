@@ -4,14 +4,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define PROVIDER 1
+#define PEER 2
+#define COSTUMER 3
 
-
-
-typedef struct {int v; int w; int type} Edge;
+typedef struct {int v; int w; int type;} Edge;
 
 typedef struct node *link;
 
-struct node {int v; link next; int type};
+struct node {int v; link next; int type;};
 /* Adjacency list representation of a graph */
 typedef struct {int V; int E; link *adj;} *Graph;
 
