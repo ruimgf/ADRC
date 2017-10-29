@@ -3,6 +3,11 @@
 
 #include "digraphs.h"
 
-Graph loadFromFile(char * filePath);
+#define PROVIDER 1
+#define PEER 2
+#define COSTUMER 3
+#define MAX_NODES 500000
+
+Graph  * loadFromFile(char * filePath);
 
 #endif

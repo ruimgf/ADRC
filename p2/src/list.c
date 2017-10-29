@@ -33,7 +33,6 @@ void insertmyListEnd(myList * m , void * item){
     insert_node->item = item;
     insert_node->next = NULL;
 
-
     if(m->begin == NULL){ // Empty List
       m->begin = insert_node;
       insert_node->prev = NULL;

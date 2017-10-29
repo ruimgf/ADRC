@@ -16,7 +16,7 @@ staticAnalises.o : src/staticAnalises.c src/staticAnalises.h
 	$(CC) $(CFLAGS) -c src/staticAnalises.c -o obj/staticAnalises.o
 
 $(TARGET): src/$(TARGET).c $(DEPS)
-	$(CC) $(CFLAGS) src/$(TARGET).c  obj/staticAnalises.o obj/list.o -o $(TARGET).o
+	$(CC) $(CFLAGS) src/$(TARGET).c  obj/staticAnalises.o obj/digraphs.o obj/list.o -o $(TARGET).o
 
 clean:
 	$(RM) *.o *~ obj/*.o
