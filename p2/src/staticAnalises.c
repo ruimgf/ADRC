@@ -36,3 +36,15 @@ Graph * loadFromFile(char * filePath){
   fclose(file);
   return G;
 }
+
+int hasCustomerCycles(Graph * G){
+    return 1;
+}
+
+int isComercialConnected(Graph * G){
+    return 1;
+}
+
+int electedRoute(Graph * G, int destination){
+    return 1;
+}

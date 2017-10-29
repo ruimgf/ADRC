@@ -9,5 +9,6 @@
 #define MAX_NODES 500000
 
 Graph  * loadFromFile(char * filePath);
+int hasCustomerCycles(Graph * G);
 
 #endif
