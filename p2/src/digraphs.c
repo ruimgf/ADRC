@@ -29,7 +29,8 @@ Graph GRAPHinit(int V) {
   return G;
 }
 
-void GRAPHinsertE(Graph G, Edge e) {
+/*Insert a edge in a digraph from v -> w*/
+void DIGRAPHinsertE(Graph G, Edge e) {
   int v = e.v;
   int w = e.w;
   int type = e.type;

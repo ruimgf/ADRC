@@ -24,7 +24,7 @@ link NEW(int v, link next, int type);
 
 Graph GRAPHinit(int);
 
-void GRAPHinsertE(Graph, Edge);
+void DIGRAPHinsertE(Graph, Edge);
 
 /*void GRAPHshow(Graph);
 void GRAPHplot(Graph, char *);
