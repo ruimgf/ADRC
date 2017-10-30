@@ -16,7 +16,7 @@ Graph * loadFromFile(char * filePath){
     }
     switch (type) {
       case PROVIDER:
-          edge = newEdge(v,w,PROVIDER);
+          edge = newEdge(v,w,COSTUMER);
           digraphInsertE(G, edge);
           break;
       case PEER:
@@ -24,7 +24,7 @@ Graph * loadFromFile(char * filePath){
           digraphInsertE(G, edge);
         break;
       case COSTUMER:
-          edge = newEdge(v,w,COSTUMER);
+          edge = newEdge(v,w,PROVIDER);
           digraphInsertE(G, edge);
         break;
       default:
@@ -79,20 +79,20 @@ int hasCustomerCycles(Graph * G){
 }
 
 int canHop(int lastHop,int nextHop){
-    if(lastHop==PROVIDER){
+    if(lastHop==COSTUMER){
       switch (nextHop) {
         case COSTUMER:
-          return 0;
+          return 1;
         case PEER:
           return 0;
         case PROVIDER:
-          return 1;
+          return 0;
         default:
           break;
       }
     }
 
-    if(lastHop==COSTUMER){
+    if(lastHop==PROVIDER){
       switch (nextHop) {
         case COSTUMER:
           return 1;
@@ -108,11 +108,11 @@ int canHop(int lastHop,int nextHop){
     if(lastHop==PEER){
       switch (nextHop) {
         case COSTUMER:
-          return 0;
+          return 1;
         case PEER:
           return 1;
         case PROVIDER:
-          return 1;
+          return 0;
         default:
           break;
       }
@@ -148,7 +148,7 @@ int isComercialConnected(Graph * G){
         }
       }
 
-      dfs(G,visited,COSTUMER,j);
+      dfs(G,visited,PROVIDER,j);
       for(int i=0;i<MAX_NODES;i++){
         if(visited[i] != VISITED){
           printf("Node %d cannot see node %d\n",j,i);
