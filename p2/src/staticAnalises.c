@@ -110,7 +110,7 @@ int canHop(int lastHop,int nextHop){
         case COSTUMER:
           return 1;
         case PEER:
-          return 1;
+          return 0;
         case PROVIDER:
           return 0;
         default:
