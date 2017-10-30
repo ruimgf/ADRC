@@ -1,6 +1,10 @@
 #include "staticAnalises.h"
 #include "digraphs.h"
 
+#define NOT_VISITED 0
+#define VISITING 1
+#define VISITED 2
+
 Graph * loadFromFile(char * filePath){
 
   FILE * file = fopen(filePath, "r");
@@ -37,57 +41,47 @@ Graph * loadFromFile(char * filePath){
   return G;
 }
 
-int DFS(Graph * G,int * visited, int nodeID){
-  listNode * node;
-  Edge * e;
-    if(visited[nodeID]){
-      return 1;
+int DFS(Graph * G,int * visited, int nodeId){
+    listNode * aux;
+    Edge * e;
+    if(visited[nodeId] == VISITED){
+      return 0;
     }else{
-      visited[nodeID] = 1;
-    }
-
-
-    node = G->adj[nodeID]->begin;
-    while (node!=NULL) {
-      e =(Edge * ) node->item;
-      if( e->type == COSTUMER){
-        if(DFS(G,visited,e->w)){
-          return 1;
-        }
+      if(visited[nodeId] == VISITING){
+        return 1;
       }
-      node=node->next;
     }
+    visited[nodeId] = VISITING;
+    aux = G->adj[nodeId]->begin;
+    while(aux!=NULL){
+        e = (Edge *)aux->item;
+        if(e->type == COSTUMER){
+          if(DFS(G,visited,e->w)==1){
+            return 1;
+          }
+        }
+
+        aux = aux->next;
+    }
+    visited[nodeId] = VISITED;
     return 0;
 }
 int hasCustomerCycles(Graph * G){
-    int i,j;
     int visited[MAX_NODES];
-    listNode * node;
-    Edge * e;
-    for(i=0;i<MAX_NODES;i++){
-      visited[i]=0;
-    }
-    for(i=0;i<G->V;i++){
-      if(G->adj[i]->begin != NULL){
-          visited[i] = 1;
-          node = G->adj[i]->begin;
-          while (node!=NULL) {
-            e =(Edge * ) node->item;
-            if( e->type == COSTUMER){
-              if(DFS(G,visited,e->w)){
-                printf("this network have cycles\n");
-                exit(0);
-              }
-            }
-            node=node->next;
-          }
 
-      }
-      for(j=0;j<MAX_NODES;j++){
-        visited[j]=0;
+    for(int i=0; i<MAX_NODES;i++){
+      visited[i] = NOT_VISITED;
+    }
+    for(int i=0;i<MAX_NODES;i++){
+      if(visited[i] == NOT_VISITED){
+        if(DFS(G,visited,i)==1){
+          return 1;
+        }
       }
     }
+    return 0;
 }
+
 
 int isComercialConnected(Graph * G){
     return 1;

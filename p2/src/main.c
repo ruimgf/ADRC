@@ -21,5 +21,6 @@ int main(int argc, char const *argv[]) {
 
   G = loadFromFile(filePath);
   printf("%d\n",hasCustomerCycles(G));;
+
   return 0;
 }
