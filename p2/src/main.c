@@ -21,6 +21,6 @@ int main(int argc, char const *argv[]) {
 
   G = loadFromFile(filePath);
   printf("%d\n",hasCustomerCycles(G));;
-
+  printf("%d\n",isComercialConnected(G));
   return 0;
 }
