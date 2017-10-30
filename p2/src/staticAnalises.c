@@ -75,7 +75,7 @@ int hasCustomerCycles(Graph * G){
             e =(Edge * ) node->item;
             if( e->type == COSTUMER){
               if(DFS(G,visited,e->w)){
-                printf("coomercial connected\n");
+                printf("this network have cycles\n");
                 exit(0);
               }
             }
