@@ -20,6 +20,6 @@ int main(int argc, char const *argv[]) {
   sprintf(filePath, "%s",argv[1]);
 
   G = loadFromFile(filePath);
-  printGraph(G);
+  printf("%d\n",hasCustomerCycles(G));;
   return 0;
 }

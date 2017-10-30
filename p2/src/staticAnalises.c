@@ -37,8 +37,56 @@ Graph * loadFromFile(char * filePath){
   return G;
 }
 
+int DFS(Graph * G,int * visited, int nodeID){
+  listNode * node;
+  Edge * e;
+    if(visited[nodeID]){
+      return 1;
+    }else{
+      visited[nodeID] = 1;
+    }
+
+
+    node = G->adj[nodeID]->begin;
+    while (node!=NULL) {
+      e =(Edge * ) node->item;
+      if( e->type == COSTUMER){
+        if(DFS(G,visited,e->w)){
+          return 1;
+        }
+      }
+      node=node->next;
+    }
+    return 0;
+}
 int hasCustomerCycles(Graph * G){
-    return 1;
+    int i,j;
+    int visited[MAX_NODES];
+    listNode * node;
+    Edge * e;
+    for(i=0;i<MAX_NODES;i++){
+      visited[i]=0;
+    }
+    for(i=0;i<G->V;i++){
+      if(G->adj[i]->begin != NULL){
+          visited[i] = 1;
+          node = G->adj[i]->begin;
+          while (node!=NULL) {
+            e =(Edge * ) node->item;
+            if( e->type == COSTUMER){
+              if(DFS(G,visited,e->w)){
+                printf("coomercial connected\n");
+                exit(0);
+              }
+            }
+            node=node->next;
+          }
+
+      }
+      for(j=0;j<MAX_NODES;j++){
+        visited[j]=0;
+      }
+    }
 }
 
 int isComercialConnected(Graph * G){

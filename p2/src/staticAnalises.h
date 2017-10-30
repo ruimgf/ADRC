@@ -6,7 +6,7 @@
 #define PROVIDER 1
 #define PEER 2
 #define COSTUMER 3
-#define MAX_NODES 500000
+#define MAX_NODES 200000
 
 Graph  * loadFromFile(char * filePath);
 int hasCustomerCycles(Graph * G);
