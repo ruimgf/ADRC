@@ -3,25 +3,28 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "list.h"
 
+typedef struct {
+  int v;
+  int w;
+  int type;
+}Edge;
 
-
-
-typedef struct {int v; int w; int type} Edge;
-
-typedef struct node *link;
-
-struct node {int v; link next; int type};
 /* Adjacency list representation of a graph */
-typedef struct {int V; int E; link *adj;} *Graph;
+typedef struct {
+  int V;
+  int E;
+  myList ** adj;
+}Graph;
 
-Edge EDGE(int, int, int);
+Edge * newEdge(int v, int w, int type);
 
-link NEW(int v, link next, int type);
+Graph * digraphInit(int);
 
-Graph GRAPHinit(int);
+void digraphInsertE(Graph*, Edge*);
 
-void DIGRAPHinsertE(Graph, Edge);
+void printGraph(Graph * G);
 
 /*void GRAPHshow(Graph);
 void GRAPHplot(Graph, char *);

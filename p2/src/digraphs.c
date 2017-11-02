@@ -1,39 +1,45 @@
-#include "graphs.h"
+#include "digraphs.h"
 
-Edge EDGE(int v, int w, int type) {
+Edge * newEdge(int v, int w, int type) {
   Edge *eptr = (Edge *) malloc(sizeof(Edge)) ;
   eptr -> v = v;
   eptr -> w = w;
   eptr -> type = type;
-  return *eptr;
+  return eptr;
 }
 
 
-link NEW(int v, link next, int type) {
-  link x = (link) malloc(sizeof(*x));
-  x -> v = v;
-  x -> next = next;
-  x -> type = type;
-  return x;
-}
-
-Graph GRAPHinit(int V) {
+Graph  * digraphInit(int V) {
   int v;
 
-  Graph G = (Graph) malloc(sizeof *G);
+  Graph * G = (Graph*) malloc(sizeof(Graph));
   G -> V = V;
   G -> E = 0;
-  G -> adj = (link *) malloc(V * sizeof(link));
+  G -> adj = (myList **) malloc(V * sizeof(myList*));
   for (v = 0; v < V; v++)
-    G -> adj[v] = NULL;
+    G -> adj[v] = createmyList();
   return G;
 }
 
 /*Insert a edge in a digraph from v -> w*/
-void DIGRAPHinsertE(Graph G, Edge e) {
-  int v = e.v;
-  int w = e.w;
-  int type = e.type;
-  G -> adj[v] = NEW(w, G -> adj[v],type);
-  G -> E++;
+void digraphInsertE(Graph* G, Edge * e) {
+    int v = e->v;
+    insertmyListEnd(G->adj[v], (void *) e);
+    G->E ++ ;
+}
+
+void printEdge(void * e){
+    Edge edge = *(Edge*)e;
+    printf("w : %d type: %d ||",edge.w,edge.type);
+}
+void printGraph(Graph * G){
+    int i;
+    for(i=0;i<G->V;i++){
+      if(G->adj[i]->begin != NULL){
+          printf("V %d \n",i);
+          printmyList(G->adj[i],&printEdge);
+          printf("\n ----------\n");
+      }
+
+    }
 }
