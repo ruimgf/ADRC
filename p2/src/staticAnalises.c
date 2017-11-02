@@ -16,7 +16,7 @@ Graph * loadFromFile(char * filePath){
     }
     switch (type) {
       case PROVIDER:
-          edge = newEdge(v,w,CUSTOMER);
+          edge = newEdge(v,w,PROVIDER);
           digraphInsertE(G, edge);
           break;
       case PEER:
@@ -24,7 +24,7 @@ Graph * loadFromFile(char * filePath){
           digraphInsertE(G, edge);
         break;
       case CUSTOMER:
-          edge = newEdge(v,w,PROVIDER);
+          edge = newEdge(v,w,CUSTOMER);
           digraphInsertE(G, edge);
         break;
       default:
@@ -62,6 +62,7 @@ int visit(Graph * G,int * visited, int nodeId){
     visited[nodeId] = VISITED;
     return 0;
 }
+
 int hasCustomerCycles(Graph * G){
     int visited[MAX_NODES];
 
@@ -125,7 +126,6 @@ int dfs(Graph * G,int * visited,int nodeId, myList* tier_1_nodes){
     listNode * aux;
     Edge * e;
     aux = G->adj[nodeId]->begin;
-    printf("visiting: %d \n",nodeId );
     int tier_1 = 1;/*variable to check if that node is a tier 1 node*/
     while(aux!=NULL){
         e = (Edge *)aux->item;
@@ -142,6 +142,7 @@ int dfs(Graph * G,int * visited,int nodeId, myList* tier_1_nodes){
       int* tier1_nodeid = (int*) malloc(sizeof(int));
       *tier1_nodeid = nodeId;
       insertmyListEnd(tier_1_nodes, tier1_nodeid);
+      printf("visiting: %d \n",nodeId );
     }
 
     return 0;
@@ -163,7 +164,6 @@ int isComercialConnected(Graph * G){
     }
     /*list to save tier_1 nodes*/
     myList* tier_1_nodes = createmyList();
-
     /*make a dfs to ensure that we have a connected graph and discover tier1 nodes*/
     dfs(G,visited,init_dfs,tier_1_nodes);
     for(int i=0;i<MAX_NODES;i++){

@@ -20,7 +20,7 @@ int main(int argc, char const *argv[]) {
   sprintf(filePath, "%s",argv[1]);
 
   G = loadFromFile(filePath);
-  printf("%d\n",hasCustomerCycles(G));;
+  printf("%d\n",hasCustomerCycles(G));
   printf("%d\n",isComercialConnected(G));
   return 0;
 }
