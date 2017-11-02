@@ -11,7 +11,7 @@ int main(int argc, char const *argv[]) {
 
   char filePath[100];
   Graph  * G;
-  myList * test_list;
+  //myList * test_list;
   if(argc != 2){
     printf("Usage : main.o [filename]\n");
     exit(-1);
