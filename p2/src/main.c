@@ -20,13 +20,11 @@ int main(int argc, char const *argv[]) {
   sprintf(filePath, "%s",argv[1]);
 
   G = loadFromFile(filePath);
-  printf("ola\n");
   printf("%d\n",hasCustomerCycles(G));
-  printf("ola1\n");
   printf("%d\n",isComercialConnected(G));
 
   heap * h = new_heap(20);
-  dijkstra(G,7);
+  dijkstra(G,1);
   return 0;
 
 }

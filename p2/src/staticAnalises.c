@@ -261,7 +261,6 @@ void dijkstra(Graph *  G, int destination){
     heap * h = new_heap(G->V);
     listNode * aux;
     Edge * e;
-    printf("ola\n");
     for(int i=0; i<G->V;i++){
       if(G->adj[i]->begin != NULL){
         weights[i] = NO_ROUTE; // talvez mudar para costumer route
@@ -273,9 +272,8 @@ void dijkstra(Graph *  G, int destination){
       }
       heap_insert(h,i, weights[i]);
     }
-    heap_print(h);
+
     int actual_node;
-    printf("ola");
     while(1){
       actual_node = heap_pop(h);
       if(actual_node == -1){
@@ -303,7 +301,6 @@ void dijkstra(Graph *  G, int destination){
           */
           if (weights[e->w] < exported_route(weights[actual_node],inv(e->type))){
             weights[e->w] = exported_route(weights[actual_node],inv(e->type));
-            printf("increse prior %d %d\n",e->w,weights[e->w]);
             increase_prior(h,e->w,weights[e->w]);
           }
           aux = aux->next;
