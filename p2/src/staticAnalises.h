@@ -10,6 +10,9 @@
 #define VISITING 1
 #define VISITED 2
 #define MAX_NODES 200000
+#define CUSTOMER_ROUTE 1
+#define PEER_ROUTE 2
+#define PROVIDER_ROUTE 3
 
 Graph  * loadFromFile(char * filePath);
 int hasCustomerCycles(Graph * G);

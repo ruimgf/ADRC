@@ -16,15 +16,15 @@ Graph * loadFromFile(char * filePath){
     }
     switch (type) {
       case PROVIDER:
-          edge = newEdge(v,w,PROVIDER);
+          edge = newEdge(v,w,CUSTOMER_ROUTE);
           digraphInsertE(G, edge);
           break;
       case PEER:
-          edge = newEdge(v,w,PEER);
+          edge = newEdge(v,w,PEER_ROUTE);
           digraphInsertE(G, edge);
         break;
       case CUSTOMER:
-          edge = newEdge(v,w,CUSTOMER);
+          edge = newEdge(v,w,PROVIDER_ROUTE);
           digraphInsertE(G, edge);
         break;
       default:
@@ -79,48 +79,6 @@ int hasCustomerCycles(Graph * G){
     return 0;
 }
 
-int canHop(int lastHop,int nextHop){
-    if(lastHop==CUSTOMER){
-      switch (nextHop) {
-        case CUSTOMER:
-          return 1;
-        case PEER:
-          return 0;
-        case PROVIDER:
-          return 0;
-        default:
-          break;
-      }
-    }
-
-    if(lastHop==PROVIDER){
-      switch (nextHop) {
-        case CUSTOMER:
-          return 1;
-        case PEER:
-          return 1;
-        case PROVIDER:
-          return 1;
-        default:
-          break;
-      }
-    }
-
-    if(lastHop==PEER){
-      switch (nextHop) {
-        case CUSTOMER:
-          return 1;
-        case PEER:
-          return 0;
-        case PROVIDER:
-          return 0;
-        default:
-          break;
-      }
-    }
-    return 0;
-}
-
 /*DFS that gets the tier1_nodes to a list*/
 int dfs(Graph * G,int * visited,int nodeId, myList* tier_1_nodes){
     visited[nodeId] = VISITED;
@@ -130,7 +88,7 @@ int dfs(Graph * G,int * visited,int nodeId, myList* tier_1_nodes){
     int tier_1 = 1;/*variable to check if that node is a tier 1 node*/
     while(aux!=NULL){
         e = (Edge *)aux->item;
-        if(e->type == CUSTOMER){
+        if(e->type == PROVIDER_ROUTE){
           tier_1 = 0;
         }
         if(visited[e->w]==NOT_VISITED){
@@ -214,7 +172,7 @@ int isComercialConnected(Graph * G){
       /*run the adjacency list*/
       while(aux_graph!=NULL){
           e = (Edge *)aux_graph->item;
-          if(e->type == PEER){
+          if(e->type == PEER_ROUTE){
             //check if that connection is one of the other tier_1 nodes
             for(int z = 0;z<number_tier1;z++){
               if(e->w == tier_1[z]){
