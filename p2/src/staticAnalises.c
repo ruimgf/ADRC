@@ -51,7 +51,7 @@ int visit(Graph * G,int * visited, int nodeId){
     aux = G->adj[nodeId]->begin;
     while(aux!=NULL){
         e = (Edge *)aux->item;
-        if(e->type == CUSTOMER){
+        if(e->type == CUSTOMER_ROUTE){
           if(visit(G,visited,e->w)==1){
             return 1;
           }
