@@ -205,7 +205,7 @@ int exported_route(int previous, int next){
         case PEER_ROUTE:
             return PEER_ROUTE;
         case PROVIDER_ROUTE:
-            return NO_ROUTE;
+            return PROVIDER;
         case NO_ROUTE:
             return NO_ROUTE;
       }
@@ -227,9 +227,9 @@ int exported_route(int previous, int next){
     if(previous == PROVIDER_ROUTE){
       switch (next) {
         case CUSTOMER_ROUTE:
-            return PROVIDER_ROUTE;
+            return NO_ROUTE;
         case PEER_ROUTE:
-            return PROVIDER_ROUTE;
+            return NO_ROUTE;
         case PROVIDER_ROUTE:
             return PROVIDER_ROUTE;
         case NO_ROUTE:
@@ -257,7 +257,7 @@ int inv(int route){
 void dijkstra(Graph *  G, int destination){
 
     int * weights = malloc(G->V  * sizeof(int));
-
+    int * routes = malloc(G->V  * sizeof(int));
     heap * h = new_heap(G->V);
     listNode * aux;
     Edge * e;
@@ -279,6 +279,7 @@ void dijkstra(Graph *  G, int destination){
       if(actual_node == -1){
         break;
       }
+      routes[actual_node] = weights[actual_node];
       aux = G->adj[actual_node]->begin;
       while(aux != NULL){
           e = (Edge *)aux->item;
@@ -305,10 +306,11 @@ void dijkstra(Graph *  G, int destination){
           }
           aux = aux->next;
       }
+      weights[actual_node] = 10; // close node
     }
     for(int i =0 ; i<G->V;i++){
 
-      switch (weights[i]) {
+      switch (routes[i]) {
         case CUSTOMER_ROUTE:
           printf("%d ",i);
           printf("%s\n", "CUSTOMER_ROUTE");
