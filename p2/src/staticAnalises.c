@@ -135,21 +135,16 @@ int isComercialConnected(Graph * G){
     /*check if the tier_1 nodes have a peer connection from one to the others*/
 
     /*load tier1 nodes to a array*/
-    listNode* aux = tier_1_nodes->begin;
-    int number_tier1 = 0;
-    while(aux != NULL){
-      number_tier1 = number_tier1 +1;
-      aux = aux->next;
-    }
+    int number_tier1 = lenmyList(tier_1_nodes);
 
     if(number_tier1 == 0){
       printf("Number tier_1 nodes = 0. Something Wrong\n");
       return 0;
     }
 
-    int tier_1[number_tier1];
+    int * tier_1 = malloc(number_tier1 * sizeof(int));
     int i = 0;
-    aux = tier_1_nodes->begin;
+    listNode* aux = tier_1_nodes->begin;
     while(aux != NULL){
       tier_1[i] = *(int*)aux->item;
       aux = aux->next;

@@ -37,4 +37,6 @@ void printmyList(myList * m, void (*printfunction)(void*));
  */
 void freemyList(myList * m);
 
+int lenmyList(myList * m);
+
 #endif

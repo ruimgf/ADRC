@@ -63,11 +63,21 @@ void printmyList(myList * m, void (*printfunction)(void*)){
 void freemyList(myList * m){
     listNode * aux = m->begin;
     listNode * aux1;
-
     while(aux != NULL){
       aux1 = aux-> next;
       free(aux);
       aux = aux1;
     }
     free(m);
+}
+
+
+int lenmyList(myList * m){
+  listNode* aux = m->begin;
+  int number_tier1 = 0;
+  while(aux != NULL){
+    number_tier1 = number_tier1 +1;
+    aux = aux->next;
+  }
+  return number_tier1;
 }
