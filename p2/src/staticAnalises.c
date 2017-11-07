@@ -264,7 +264,7 @@ void dijkstra(Graph *  G, int destination){
     printf("ola\n");
     for(int i=0; i<G->V;i++){
       if(G->adj[i]->begin != NULL){
-        weights[i] = PROVIDER_ROUTE; // talvez mudar para costumer route
+        weights[i] = NO_ROUTE; // talvez mudar para costumer route
       }else{
         weights[i] = NO_ROUTE;
       }
@@ -325,7 +325,7 @@ void dijkstra(Graph *  G, int destination){
           printf("%s\n", "NO_ROUTE");
           break;
         case BEGIN:
-          printf("%s\n", "ORIGIN");
+          printf("%s\n", "DESTINATION");
           break;
       }
     }
