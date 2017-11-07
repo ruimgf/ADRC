@@ -264,13 +264,15 @@ void dijkstra(Graph *  G, int destination){
     for(int i=0; i<G->V;i++){
       if(G->adj[i]->begin != NULL){
         weights[i] = NO_ROUTE; // talvez mudar para costumer route
+        heap_insert(h,i, weights[i]);
       }else{
         weights[i] = NO_ROUTE;
       }
       if(i==destination){
           weights[destination] = BEGIN;
+          heap_insert(h,i, weights[i]);
       }
-      heap_insert(h,i, weights[i]);
+
     }
 
     int actual_node;

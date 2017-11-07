@@ -9,7 +9,7 @@
 #define NOT_VISITED 0
 #define VISITING 1
 #define VISITED 2
-#define MAX_NODES 12
+#define MAX_NODES 200000
 #define BEGIN 5
 #define CUSTOMER_ROUTE 4
 #define PEER_ROUTE 3
