@@ -20,6 +20,7 @@ typedef struct List_{
  * @return
  */
 myList  *  createmyList();
+
 /**
  * [insertmyListEnd insert on the end off list]
  * @param m       [pointer to list]
@@ -34,6 +35,6 @@ void printmyList(myList * m, void (*printfunction)(void*));
  * [freemyList free myList]
  * @param m [pointer to myList]
  */
-
 void freemyList(myList * m);
+
 #endif

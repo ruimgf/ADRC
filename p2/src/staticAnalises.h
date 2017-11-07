@@ -5,7 +5,7 @@
 
 #define PROVIDER 1
 #define PEER 2
-#define COSTUMER 3
+#define CUSTOMER 3
 #define NOT_VISITED 0
 #define VISITING 1
 #define VISITED 2

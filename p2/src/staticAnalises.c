@@ -16,15 +16,15 @@ Graph * loadFromFile(char * filePath){
     }
     switch (type) {
       case PROVIDER:
-          edge = newEdge(v,w,COSTUMER);
+          edge = newEdge(v,w,PROVIDER);
           digraphInsertE(G, edge);
           break;
       case PEER:
           edge = newEdge(v,w,PEER);
           digraphInsertE(G, edge);
         break;
-      case COSTUMER:
-          edge = newEdge(v,w,PROVIDER);
+      case CUSTOMER:
+          edge = newEdge(v,w,CUSTOMER);
           digraphInsertE(G, edge);
         break;
       default:
@@ -51,7 +51,7 @@ int visit(Graph * G,int * visited, int nodeId){
     aux = G->adj[nodeId]->begin;
     while(aux!=NULL){
         e = (Edge *)aux->item;
-        if(e->type == COSTUMER){
+        if(e->type == CUSTOMER){
           if(visit(G,visited,e->w)==1){
             return 1;
           }
@@ -62,6 +62,7 @@ int visit(Graph * G,int * visited, int nodeId){
     visited[nodeId] = VISITED;
     return 0;
 }
+
 int hasCustomerCycles(Graph * G){
     int visited[MAX_NODES];
 
@@ -79,9 +80,9 @@ int hasCustomerCycles(Graph * G){
 }
 
 int canHop(int lastHop,int nextHop){
-    if(lastHop==COSTUMER){
+    if(lastHop==CUSTOMER){
       switch (nextHop) {
-        case COSTUMER:
+        case CUSTOMER:
           return 1;
         case PEER:
           return 0;
@@ -94,7 +95,7 @@ int canHop(int lastHop,int nextHop){
 
     if(lastHop==PROVIDER){
       switch (nextHop) {
-        case COSTUMER:
+        case CUSTOMER:
           return 1;
         case PEER:
           return 1;
@@ -107,7 +108,7 @@ int canHop(int lastHop,int nextHop){
 
     if(lastHop==PEER){
       switch (nextHop) {
-        case COSTUMER:
+        case CUSTOMER:
           return 1;
         case PEER:
           return 0;
@@ -117,45 +118,128 @@ int canHop(int lastHop,int nextHop){
           break;
       }
     }
+    return 0;
 }
 
-int dfs(Graph * G,int * visited, int lastHop,int nodeId){
+/*DFS that gets the tier1_nodes to a list*/
+int dfs(Graph * G,int * visited,int nodeId, myList* tier_1_nodes){
     visited[nodeId] = VISITED;
     listNode * aux;
     Edge * e;
     aux = G->adj[nodeId]->begin;
+    int tier_1 = 1;/*variable to check if that node is a tier 1 node*/
     while(aux!=NULL){
         e = (Edge *)aux->item;
-        if(visited[e->w]==NOT_VISITED && canHop(lastHop,e->type)){
-          dfs(G,visited,e->type,e->w);
+        if(e->type == CUSTOMER){
+          tier_1 = 0;
+        }
+        if(visited[e->w]==NOT_VISITED){
+          dfs(G,visited,e->w,tier_1_nodes);
         }
         aux = aux->next;
     }
+    /*if the node is a tier 1 we insert it on the list*/
+    if(tier_1){
+      int* tier1_nodeid = (int*) malloc(sizeof(int));
+      *tier1_nodeid = nodeId;
+      insertmyListEnd(tier_1_nodes, tier1_nodeid);
+    }
+
     return 0;
 }
 
+/*function that check if the graph is commercially connected
+it receives only a argument, that is the graph*/
 int isComercialConnected(Graph * G){
     int visited[MAX_NODES];
-    for(int j=1;j<MAX_NODES;j++){
-      if(G->adj[j]->begin==NULL){
-        continue;
+    /*mark every node that has no neighbors, we assume that are not isolated
+     nodes*/
+    int init_dfs = 0;
+    for(int i=0; i<MAX_NODES;i++){
+      if(G->adj[i]->begin==NULL){
+        visited[i] = VISITED;
+      }else{
+        init_dfs=i;
+        visited[i] = NOT_VISITED;
       }
-      for(int i=0; i<MAX_NODES;i++){
-        if(G->adj[i]->begin==NULL){
-          visited[i] = VISITED;
+    }
+    /*list to save tier_1 nodes*/
+    myList* tier_1_nodes = createmyList();
+    /*make a dfs to ensure that we have a connected graph and discover tier1 nodes*/
+    dfs(G,visited,init_dfs,tier_1_nodes);
+    for(int i=0;i<MAX_NODES;i++){
+      if(visited[i] != VISITED){
+        printf("Node %d cannot see node \n",i);
+        return 0;
+      }
+    }
+
+    /*check if the tier_1 nodes have a peer connection from one to the others*/
+
+    /*load tier1 nodes to a array*/
+    listNode* aux = tier_1_nodes->begin;
+    int number_tier1 = 0;
+    while(aux != NULL){
+      number_tier1 = number_tier1 +1;
+      aux = aux->next;
+    }
+
+    if(number_tier1 == 0){
+      printf("Number tier_1 nodes = 0. Something Wrong\n");
+      return 0;
+    }
+
+    int tier_1[number_tier1];
+    int i = 0;
+    aux = tier_1_nodes->begin;
+    while(aux != NULL){
+      tier_1[i] = *(int*)aux->item;
+      aux = aux->next;
+      i = i+1;
+    }
+
+
+
+    /*initiate the search*/
+    for(int i =0; i<number_tier1; i++){
+      listNode * aux_graph;
+      Edge * e;
+      aux_graph = G->adj[tier_1[i]]->begin;/*get adjacent list for tier1 node number i*/
+
+      int visited[number_tier1];
+      for(int j= 0; j <number_tier1;j++){
+        visited[j] = NOT_VISITED;
+      }
+
+      /*run the adjacency list*/
+      while(aux_graph!=NULL){
+          e = (Edge *)aux_graph->item;
+          if(e->type == PEER){
+            //check if that connection is one of the other tier_1 nodes
+            for(int z = 0;z<number_tier1;z++){
+              if(e->w == tier_1[z]){
+                visited[z] = VISITED;
+              }
+            }
+          }
+        aux_graph = aux_graph->next;
+      }
+
+      /*check if all tier one nodes have been visited*/
+      for(int z = 0; z<number_tier1;z++){
+        if(z == i){/*do not check if visited himself*/
+          continue;
         }else{
-          visited[i] = NOT_VISITED;
+          if(visited[z] == NOT_VISITED){
+            return 0;
+          }
         }
       }
 
-      dfs(G,visited,PROVIDER,j);
-      for(int i=0;i<MAX_NODES;i++){
-        if(visited[i] != VISITED){
-          printf("Node %d cannot see node %d\n",j,i);
-          return 0;
-        }
-      }
+
     }
+
+    /* if we reach this point we have a commercially connected*/
     return 1;
 
 }

@@ -32,7 +32,7 @@ void insertmyListEnd(myList * m , void * item){
 
     insert_node->item = item;
     insert_node->next = NULL;
-    
+
     if(m->begin == NULL){ // Empty List
       m->begin = insert_node;
       insert_node->prev = NULL;
@@ -42,7 +42,6 @@ void insertmyListEnd(myList * m , void * item){
     }
     m->end = insert_node;
 }
-
 /**
  * [printmyList print list]
  * @param m [pointer to myList]
@@ -57,7 +56,6 @@ void printmyList(myList * m, void (*printfunction)(void*)){
         aux = aux->next;
     }
 }
-
 /**
  * [freemyList free myList]
  * @param m [pointer to myList]
