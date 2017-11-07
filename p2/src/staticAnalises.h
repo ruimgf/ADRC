@@ -9,13 +9,16 @@
 #define NOT_VISITED 0
 #define VISITING 1
 #define VISITED 2
-#define MAX_NODES 200000
-#define CUSTOMER_ROUTE 1
-#define PEER_ROUTE 2
-#define PROVIDER_ROUTE 3
+#define MAX_NODES 12
+#define BEGIN 5
+#define CUSTOMER_ROUTE 4
+#define PEER_ROUTE 3
+#define PROVIDER_ROUTE 2
+#define NO_ROUTE 1
+
 
 Graph  * loadFromFile(char * filePath);
 int hasCustomerCycles(Graph * G);
 int isComercialConnected(Graph * G);
-
+void dijkstra(Graph *  G, int destination);
 #endif

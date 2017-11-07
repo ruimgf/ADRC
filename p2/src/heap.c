@@ -44,7 +44,7 @@ void heap_insert(heap * h,int id, int prior){
 void heap_down(heap * h, int pos){
   int father = pos;
   int son = pos+1;
-  
+
 
   while (son<h->freePos) {
 
@@ -66,6 +66,9 @@ void heap_down(heap * h, int pos){
 }
 
 int heap_pop(heap * h){
+  if(h->freePos==0){
+    return -1;
+  }
   int popId = h->elements[0].id;
   h->indexes[popId] = -1;
   h->freePos--;

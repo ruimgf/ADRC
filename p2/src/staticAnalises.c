@@ -1,6 +1,6 @@
 #include "staticAnalises.h"
 #include "digraphs.h"
-
+#include "heap.h"
 Graph * loadFromFile(char * filePath){
 
   FILE * file = fopen(filePath, "r");
@@ -195,6 +195,140 @@ int isComercialConnected(Graph * G){
     /* if we reach this point we have a commercially connected*/
     return 1;
 
+}
+
+int exported_route(int previous, int next){
+    if(previous == CUSTOMER_ROUTE){
+      switch (next) {
+        case CUSTOMER_ROUTE:
+            return CUSTOMER_ROUTE;
+        case PEER_ROUTE:
+            return PEER_ROUTE;
+        case PROVIDER_ROUTE:
+            return NO_ROUTE;
+        case NO_ROUTE:
+            return NO_ROUTE;
+      }
+    }
+
+    if(previous == PEER_ROUTE){
+      switch (next) {
+        case CUSTOMER_ROUTE:
+            return NO_ROUTE;
+        case PEER_ROUTE:
+            return NO_ROUTE;
+        case PROVIDER_ROUTE:
+            return PROVIDER_ROUTE;
+        case NO_ROUTE:
+            return NO_ROUTE;
+      }
+    }
+
+    if(previous == PROVIDER_ROUTE){
+      switch (next) {
+        case CUSTOMER_ROUTE:
+            return PROVIDER_ROUTE;
+        case PEER_ROUTE:
+            return PROVIDER_ROUTE;
+        case PROVIDER_ROUTE:
+            return PROVIDER_ROUTE;
+        case NO_ROUTE:
+            return NO_ROUTE;
+      }
+    }
+
+    if(previous == BEGIN){
+      return next;
+    }
+}
+
+int inv(int route){
+  switch (route) {
+    case CUSTOMER_ROUTE:
+        return PROVIDER_ROUTE;
+    case PEER_ROUTE:
+        return PEER_ROUTE;
+    case PROVIDER_ROUTE:
+        return CUSTOMER_ROUTE;
+    case NO_ROUTE:
+        return NO_ROUTE;
+  }
+}
+void dijkstra(Graph *  G, int destination){
+
+    int * weights = malloc(G->V  * sizeof(int));
+
+    heap * h = new_heap(G->V);
+    listNode * aux;
+    Edge * e;
+    printf("ola\n");
+    for(int i=0; i<G->V;i++){
+      if(G->adj[i]->begin != NULL){
+        weights[i] = PROVIDER_ROUTE; // talvez mudar para costumer route
+      }else{
+        weights[i] = NO_ROUTE;
+      }
+      if(i==destination){
+          weights[destination] = BEGIN;
+      }
+      heap_insert(h,i, weights[i]);
+    }
+    heap_print(h);
+    int actual_node;
+    printf("ola");
+    while(1){
+      actual_node = heap_pop(h);
+      if(actual_node == -1){
+        break;
+      }
+      aux = G->adj[actual_node]->begin;
+      while(aux != NULL){
+          e = (Edge *)aux->item;
+          /*
+          printf("edge type from %d to %d ",e->v,e->w);
+          switch (e->type) {
+            case CUSTOMER_ROUTE:
+              printf("%s\n", "CUSTOMER_ROUTE");
+              break;
+            case PEER_ROUTE:
+              printf("%s\n", "PEER_ROUTE");
+              break;
+            case PROVIDER_ROUTE:
+              printf("%s\n", "PROVIDER_ROUTE");
+              break;
+            case NO_ROUTE:
+              printf("%s\n", "NO_ROUTE");
+              break;
+          }
+          */
+          if (weights[e->w] < exported_route(weights[actual_node],inv(e->type))){
+            weights[e->w] = exported_route(weights[actual_node],inv(e->type));
+            printf("increse prior %d %d\n",e->w,weights[e->w]);
+            increase_prior(h,e->w,weights[e->w]);
+          }
+          aux = aux->next;
+      }
+    }
+    for(int i =0 ; i<G->V;i++){
+      printf("%d ",i);
+      switch (weights[i]) {
+        case CUSTOMER_ROUTE:
+          printf("%s\n", "CUSTOMER_ROUTE");
+          break;
+        case PEER_ROUTE:
+          printf("%s\n", "PEER_ROUTE");
+          break;
+        case PROVIDER_ROUTE:
+          printf("%s\n", "PROVIDER_ROUTE");
+          break;
+        case NO_ROUTE:
+          printf("%s\n", "NO_ROUTE");
+          break;
+        case BEGIN:
+          printf("%s\n", "ORIGIN");
+          break;
+      }
+    }
 }
 
 int electedRoute(Graph * G, int destination){
