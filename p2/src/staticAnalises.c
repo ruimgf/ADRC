@@ -307,21 +307,25 @@ void dijkstra(Graph *  G, int destination){
       }
     }
     for(int i =0 ; i<G->V;i++){
-      printf("%d ",i);
+
       switch (weights[i]) {
         case CUSTOMER_ROUTE:
+          printf("%d ",i);
           printf("%s\n", "CUSTOMER_ROUTE");
           break;
         case PEER_ROUTE:
+          printf("%d ",i);
           printf("%s\n", "PEER_ROUTE");
           break;
         case PROVIDER_ROUTE:
+          printf("%d ",i);
           printf("%s\n", "PROVIDER_ROUTE");
           break;
         case NO_ROUTE:
-          printf("%s\n", "NO_ROUTE");
+          //printf("%s\n", "NO_ROUTE");
           break;
         case BEGIN:
+          printf("%d ",i);
           printf("%s\n", "DESTINATION");
           break;
       }
