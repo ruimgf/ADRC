@@ -306,7 +306,7 @@ void dijkstra(Graph *  G, int destination){
           }
           aux = aux->next;
       }
-      weights[actual_node] = 10; // close node
+      weights[actual_node] = 10; // close
     }
     for(int i =0 ; i<G->V;i++){
 
