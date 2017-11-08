@@ -269,9 +269,9 @@ void dijkstra(Graph *  G, int destination){
         weights[i] = NO_ROUTE;
       }
       if(i==destination){
-          weights[destination] = CUSTOMER_ROUTE;
+          weights[destination] =  BEGIN;
           heap_insert(h,i, weights[i]);
-          
+
       }
 
     }
@@ -311,7 +311,7 @@ void dijkstra(Graph *  G, int destination){
       }
 
     }
-    for(int i =0 ; i<G->V;i++){
+    for(int i =0 ; i<12;i++){
 
       switch (weights[i]) {
         case CUSTOMER_ROUTE:
@@ -327,7 +327,8 @@ void dijkstra(Graph *  G, int destination){
           printf("%s\n", "PROVIDER_ROUTE");
           break;
         case NO_ROUTE:
-          //printf("%s\n", "NO_ROUTE");
+        printf("%d ",i);
+          printf("%s\n", "NO_ROUTE");
           break;
         case BEGIN:
           printf("%d ",i);

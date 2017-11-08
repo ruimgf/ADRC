@@ -24,7 +24,7 @@ int main(int argc, char const *argv[]) {
   printf("%d\n",isComercialConnected(G));
 
   heap * h = new_heap(20);
-  dijkstra(G,7);
+  dijkstra(G,9);
   return 0;
 
 }
