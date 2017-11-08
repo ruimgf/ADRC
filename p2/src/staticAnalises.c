@@ -243,6 +243,9 @@ void dijkstra(Graph *  G, int destination){
         if(i==destination){
             weights[destination] =  CUSTOMER_ROUTE;
         }
+        if(i==64612){
+          printf("inserting 64612 on heap\n");
+        }
         heap_insert(h,i, weights[i]);
       }else{
         weights[i] = NO_ROUTE;
@@ -260,8 +263,18 @@ void dijkstra(Graph *  G, int destination){
       }
 
       aux = G->adj[actual_node]->begin;
+      if(actual_node==65456){
+        printf("analise\n");
+      }
       //printf("analise %d\n",actual_node);
+      if(weights[actual_node]==0){
+        heap_print(h);
+        getchar();
+      }
       while(aux != NULL){
+        if(actual_node==65456){
+          printf("analise\n");
+        }
           e = (Edge *)aux->item;
           /*
           printf("edge type from %d to %d ",e->v,e->w);
@@ -280,8 +293,12 @@ void dijkstra(Graph *  G, int destination){
               break;
           }
           */
+          if(weights[actual_node]==0){
+            printf("%d\n",actual_node);
+          }
           if (weights[e->w] < exported_route(weights[actual_node],inv(e->type))){
             //printf("changing prior for %d previous prior %d, inverse = %d\n",e->w,weights[e->w],inv(e->type));
+
             weights[e->w] = exported_route(weights[actual_node],inv(e->type));
             //printf("new prior %d\n",weights[e->w]);
             increase_prior(h,e->w,weights[e->w]);
@@ -291,7 +308,8 @@ void dijkstra(Graph *  G, int destination){
       }
 
     }
-    /*for(int i =1 ; i<MAX_NODES;i++){
+    /*
+    for(int i =1 ; i<MAX_NODES;i++){
       if(G->adj[i]->begin == NULL)
           continue;
       switch (weights[i]) {
@@ -316,7 +334,8 @@ void dijkstra(Graph *  G, int destination){
           printf("%s\n", "DESTINATION");
           break;
       }
-    }*/
+    }
+    */
 }
 
 int electedRoute(Graph * G, int destination){

@@ -48,14 +48,15 @@ void heap_insert(heap * h,int id, int prior){
 void heap_down(heap * h, int pos){
   int father = pos;
   int son;
-  if(h->elements[father+1].prior>h->elements[father+2].prior){
-    son = pos+1;
+
+  if(h->elements[2*father+1].prior>h->elements[2*father+2].prior){
+    son = 2*pos+1;
   }else{
-    son=pos+2;
+    son=2*pos+2;
   }
   if(h->freePos==1)
     return;
-  while (son<h->freePos) {
+  while (father<h->freePos) {
 
     if(h->elements[father].prior < h->elements[son].prior){
       int swapId = h->elements[father].id;
@@ -67,10 +68,10 @@ void heap_down(heap * h, int pos){
       h->indexes[swapId] = son;
       h->indexes[h->elements[father].id] = father;
       father = son;
-      if(h->elements[father+1].prior>h->elements[father+2].prior){
-        son = father+1;
+      if(h->elements[2*father+1].prior>h->elements[2*father+2].prior){
+        son = 2*father+1;
       }else{
-        son=father+2;
+        son=2*father+2;
       }
 
     }else{
