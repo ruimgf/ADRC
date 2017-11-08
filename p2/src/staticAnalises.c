@@ -15,16 +15,16 @@ Graph * loadFromFile(char * filePath){
       return G;
     }
     switch (type) {
-      case PROVIDER:
-          edge = newEdge(v,w,CUSTOMER_ROUTE);
+      case 1:
+          edge = newEdge(v,w,PROVIDER);
           digraphInsertE(G, edge);
           break;
-      case PEER:
-          edge = newEdge(v,w,PEER_ROUTE);
+      case 2:
+          edge = newEdge(v,w,PEER);
           digraphInsertE(G, edge);
         break;
-      case CUSTOMER:
-          edge = newEdge(v,w,PROVIDER_ROUTE);
+      case 3:
+          edge = newEdge(v,w,CUSTOMER);
           digraphInsertE(G, edge);
         break;
       default:
@@ -51,7 +51,7 @@ int visit(Graph * G,int * visited, int nodeId){
     aux = G->adj[nodeId]->begin;
     while(aux!=NULL){
         e = (Edge *)aux->item;
-        if(e->type == CUSTOMER_ROUTE){
+        if(e->type == CUSTOMER){
           if(visit(G,visited,e->w)==1){
             return 1;
           }
@@ -88,7 +88,7 @@ int dfs(Graph * G,int * visited,int nodeId, myList* tier_1_nodes){
     int tier_1 = 1;/*variable to check if that node is a tier 1 node*/
     while(aux!=NULL){
         e = (Edge *)aux->item;
-        if(e->type == PROVIDER_ROUTE){
+        if(e->type == CUSTOMER){
           tier_1 = 0;
         }
         if(visited[e->w]==NOT_VISITED){
@@ -167,7 +167,7 @@ int isComercialConnected(Graph * G){
       /*run the adjacency list*/
       while(aux_graph!=NULL){
           e = (Edge *)aux_graph->item;
-          if(e->type == PEER_ROUTE){
+          if(e->type == PEER){
             //check if that connection is one of the other tier_1 nodes
             for(int z = 0;z<number_tier1;z++){
               if(e->w == tier_1[z]){
@@ -198,34 +198,34 @@ int isComercialConnected(Graph * G){
 }
 
 int exported_route(int previous, int next){
-    int mat[4][4];
+    int mat[5][5];
 
-    mat[CUSTOMER_ROUTE][CUSTOMER_ROUTE] = CUSTOMER_ROUTE;
-    mat[CUSTOMER_ROUTE][PEER_ROUTE] = NO_ROUTE;
-    mat[CUSTOMER_ROUTE][PROVIDER_ROUTE] = NO_ROUTE;
-    mat[CUSTOMER_ROUTE][NO_ROUTE] = NO_ROUTE;
+    mat[CUSTOMER][CUSTOMER] = CUSTOMER;
+    mat[CUSTOMER][PEER] = NO_ROUTE;
+    mat[CUSTOMER][PROVIDER] = NO_ROUTE;
+    mat[CUSTOMER][NO_ROUTE] = NO_ROUTE;
 
-    mat[PEER_ROUTE][CUSTOMER_ROUTE] = PEER_ROUTE;
-    mat[PEER_ROUTE][PEER_ROUTE] = NO_ROUTE;
-    mat[PEER_ROUTE][PROVIDER_ROUTE] = NO_ROUTE;
-    mat[PEER_ROUTE][NO_ROUTE] = NO_ROUTE;
+    mat[PEER][CUSTOMER] = PEER;
+    mat[PEER][PEER] = NO_ROUTE;
+    mat[PEER][PROVIDER] = NO_ROUTE;
+    mat[PEER][NO_ROUTE] = NO_ROUTE;
 
-    mat[PROVIDER_ROUTE][CUSTOMER_ROUTE] = PROVIDER;
-    mat[PROVIDER_ROUTE][PEER_ROUTE] = PROVIDER;
-    mat[PROVIDER_ROUTE][PROVIDER_ROUTE] = PROVIDER;
-    mat[PROVIDER_ROUTE][NO_ROUTE] = NO_ROUTE;
+    mat[PROVIDER][CUSTOMER] = PROVIDER;
+    mat[PROVIDER][PEER] = PROVIDER;
+    mat[PROVIDER][PROVIDER] = PROVIDER;
+    mat[PROVIDER][NO_ROUTE] = NO_ROUTE;
 
     return mat[next][previous];
 }
 
 int inv(int route){
   switch (route) {
-    case CUSTOMER_ROUTE:
-        return PROVIDER_ROUTE;
-    case PEER_ROUTE:
-        return PEER_ROUTE;
-    case PROVIDER_ROUTE:
-        return CUSTOMER_ROUTE;
+    case CUSTOMER:
+        return PROVIDER;
+    case PEER:
+        return PEER;
+    case PROVIDER:
+        return CUSTOMER;
     case NO_ROUTE:
         return NO_ROUTE;
   }
@@ -241,7 +241,7 @@ void dijkstra(Graph *  G, int destination){
       if(G->adj[i]->begin != NULL){
         weights[i] = NO_ROUTE; // talvez mudar para costumer route
         if(i==destination){
-            weights[destination] =  CUSTOMER_ROUTE;
+            weights[destination] =  CUSTOMER;
         }
         heap_insert(h,i, weights[i]);
       }else{
@@ -266,21 +266,21 @@ void dijkstra(Graph *  G, int destination){
           /*
           printf("edge type from %d to %d ",e->v,e->w);
           switch (e->type) {
-            case CUSTOMER_ROUTE:
-              printf("%s\n", "CUSTOMER_ROUTE");
+            case CUSTOMER:
+              printf("%s\n", "CUSTOMER");
               break;
-            case PEER_ROUTE:
-              printf("%s\n", "PEER_ROUTE");
+            case PEER:
+              printf("%s\n", "PEER");
               break;
-            case PROVIDER_ROUTE:
-              printf("%s\n", "PROVIDER_ROUTE");
+            case PROVIDER:
+              printf("%s\n", "PROVIDER");
               break;
             case NO_ROUTE:
               printf("%s\n", "NO_ROUTE");
               break;
           }
           */
-          if (weights[e->w] < exported_route(weights[actual_node],inv(e->type))){
+          if (weights[e->w] > exported_route(weights[actual_node],inv(e->type))){
             //printf("changing prior for %d previous prior %d, inverse = %d\n",e->w,weights[e->w],inv(e->type));
             weights[e->w] = exported_route(weights[actual_node],inv(e->type));
             //printf("new prior %d\n",weights[e->w]);
@@ -291,21 +291,21 @@ void dijkstra(Graph *  G, int destination){
       }
 
     }
-    /*for(int i =1 ; i<MAX_NODES;i++){
+    for(int i =1 ; i<MAX_NODES;i++){
       if(G->adj[i]->begin == NULL)
           continue;
       switch (weights[i]) {
-        case CUSTOMER_ROUTE:
+        case CUSTOMER:
           printf("%d ",i);
-          printf("%s\n", "CUSTOMER_ROUTE");
+          printf("%s\n", "CUSTOMER");
           break;
-        case PEER_ROUTE:
+        case PEER:
           printf("%d ",i);
-          printf("%s\n", "PEER_ROUTE");
+          printf("%s\n", "PEER");
           break;
-        case PROVIDER_ROUTE:
+        case PROVIDER:
           printf("%d ",i);
-          printf("%s\n", "PROVIDER_ROUTE");
+          printf("%s\n", "PROVIDER");
           break;
         case NO_ROUTE:
         printf("%d ",i);
@@ -316,7 +316,7 @@ void dijkstra(Graph *  G, int destination){
           printf("%s\n", "DESTINATION");
           break;
       }
-    }*/
+    }
 }
 
 int electedRoute(Graph * G, int destination){
