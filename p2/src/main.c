@@ -12,7 +12,7 @@ int main(int argc, char const *argv[]) {
   char filePath[100];
   Graph  * G;
   //myList * test_list;
-  if(argc != 2){
+  if(argc != 3){
     printf("Usage : main.o [filename]\n");
     exit(-1);
   }
@@ -23,8 +23,8 @@ int main(int argc, char const *argv[]) {
   printf("%d\n",hasCustomerCycles(G));
   printf("%d\n",isComercialConnected(G));
 
-  heap * h = new_heap(20);
-  dijkstra(G,9);
+
+  dijkstra(G,atoi(argv[2]));
   return 0;
 
 }

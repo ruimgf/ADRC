@@ -11,10 +11,10 @@
 #define VISITED 2
 #define MAX_NODES 200000
 #define BEGIN 5
-#define CUSTOMER_ROUTE 4
-#define PEER_ROUTE 3
-#define PROVIDER_ROUTE 2
-#define NO_ROUTE 1
+#define CUSTOMER_ROUTE 3
+#define PEER_ROUTE 2
+#define PROVIDER_ROUTE 1
+#define NO_ROUTE 0
 
 
 Graph  * loadFromFile(char * filePath);
