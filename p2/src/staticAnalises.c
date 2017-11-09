@@ -261,7 +261,7 @@ void dijkstra(Graph *  G, int destination){
       }
 
       aux = G->adj[actual_node]->begin;
-      //printf("analise %d\n",actual_node);
+      printf("analise %d\n",actual_node);
       while(aux != NULL){
           e = (Edge *)aux->item;
           /*

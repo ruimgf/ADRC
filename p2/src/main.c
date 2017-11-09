@@ -23,7 +23,9 @@ int main(int argc, char const *argv[]) {
   printf("%d\n",hasCustomerCycles(G));
   printf("%d\n",isComercialConnected(G));
 
-  /*test heap*/
+  /*
+  test heap
+
   heap* test_heap = createHeap(10);
 
   printf("----TESTING CREATION------\n");
@@ -40,7 +42,7 @@ int main(int argc, char const *argv[]) {
 
   removeHeap(test_heap);
   printHeap(test_heap);
-
+  */
   dijkstra(G,atoi(argv[2]));
   return 0;
 }

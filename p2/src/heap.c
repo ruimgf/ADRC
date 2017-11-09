@@ -28,15 +28,15 @@ heap* createHeap(int capacity){
 
 //function that gives the parent of a child given its position on the heap
 int parent(int child_position){
-  return child_position/2;
+  return (child_position-1)/2;
 }
 //function that gives the child_left position of a given father
 int leftChild(int parent_postion){
-  return parent_postion*2 +1;
+  return parent_postion*2 ;
 }
 //function that gives the child_right position of a given father
 int rightChild(int parent_postion){
-  return parent_postion*2 +2;
+  return parent_postion*2 + 1;
 }
 
 //fucntion that swaps to nodes in the heap, it must also swap the locations
@@ -174,7 +174,7 @@ int modifyHeap(heap* heapToChange,int v,int value){
   int position = heapToChange->heapLocations[v];
   //if the value that is there is of greater priority we have to change and then
   //heap down
-  if(heapToChange->heapTable[position].value > value ){
+  if(heapToChange->heapTable[position].value < value ){
     heapToChange->heapTable[position].value = value;
     heapDown(heapToChange,position);
   }else{
@@ -203,13 +203,16 @@ void printHeap(heap* heapToChange){
 
   printf("LOCATIONS:\n");
   for(int i = 0;i<heapToChange->capacity;i++){
-    printf(" | array_position: %d location: %d | ",i,heapToChange->heapLocations[i]);
-    printf("\n");
+    if(heapToChange->heapLocations[i]!=-1){
+      printf(" | array_position: %d location: %d | ",i,heapToChange->heapLocations[i]);
+      printf("\n");
+    }
+
   }
   printf("\n");
 
   printf("HEAPTABLE:\n");
-  for(int i = 0;i<heapToChange->capacity;i++){
+  for(int i = 0;i<heapToChange->size;i++){
     printf(" | array_position: %d vertice:%d value:%d | ",i,heapToChange->heapTable[i].v,heapToChange->heapTable[i].value);
     printf("\n");
   }
