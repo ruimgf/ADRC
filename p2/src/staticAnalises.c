@@ -240,7 +240,7 @@ void dijkstra(Graph *  G, int destination){
     Edge * e;
     for(int i=0; i<G->V;i++){
       if(G->adj[i]->begin != NULL){
-        weights[i] = NO_ROUTE; // talvez mudar para costumer route
+        weights[i] = PROVIDER; // talvez mudar para costumer route
         if(i==destination){
             weights[destination] =  CUSTOMER;
         }
@@ -256,7 +256,7 @@ void dijkstra(Graph *  G, int destination){
     while(!isEmpty(h)){
       //printHeap(h);
       actual_node = removeHeap(h);
-      if(actual_node == -1){
+      if(weights[actual_node] == PROVIDER){
         break;
       }
       //printf("depois de remover\n");
@@ -292,6 +292,7 @@ void dijkstra(Graph *  G, int destination){
       }
 
     }
+    /*
     for(int i =1 ; i<MAX_NODES;i++){
       if(G->adj[i]->begin == NULL)
           continue;
@@ -318,6 +319,7 @@ void dijkstra(Graph *  G, int destination){
           break;
       }
     }
+    */
 }
 
 int electedRoute(Graph * G, int destination){
