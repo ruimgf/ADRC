@@ -17,8 +17,8 @@ heap* createHeap(int capacity){
 
   //-1 means empty;
   for(int i = 0;i<capacity;i++){
-    //TODO not sure if this assigment work
-    new_heap->heapTable[i] = empty_node;
+    new_heap->heapTable[i].v = empty_node.v;
+    new_heap->heapTable[i].value = empty_node.value;
     new_heap->heapLocations[i] = -1;
   }
 
@@ -45,13 +45,16 @@ void swapNodes(heap* heapToChange, int heapLocationA, int heapLocationB){
   int aux_location;
 
   /*get the vertices that we want to change*/
-  int verticeA = heapToChange->heapLocations[heapToChange->heapTable[heapLocationA].v];
-  int verticeB = heapToChange->heapLocations[heapToChange->heapTable[heapLocationB].v];
+  int verticeA = heapToChange->heapTable[heapLocationA].v;
+  int verticeB = heapToChange->heapTable[heapLocationB].v;
 
-  //swap heapTable TODO not sure if this assigment work
-  aux = heapToChange->heapTable[heapLocationB];
-  heapToChange->heapTable[heapLocationB] = heapToChange->heapTable[heapLocationA];
-  heapToChange->heapTable[heapLocationA] = aux;
+  //swap heapTable
+  aux.v = heapToChange->heapTable[heapLocationB].v;
+  aux.value = heapToChange->heapTable[heapLocationB].value;
+  heapToChange->heapTable[heapLocationB].v = heapToChange->heapTable[heapLocationA].v;
+  heapToChange->heapTable[heapLocationB].value = heapToChange->heapTable[heapLocationA].value;
+  heapToChange->heapTable[heapLocationA].v = aux.v;
+  heapToChange->heapTable[heapLocationA].value = aux.value;
 
   //swapHeapLocations
   aux_location = heapToChange->heapLocations[verticeB];
@@ -87,7 +90,7 @@ void heapDown(heap* heapToChange, int startPosition){
   //TODO maybe we have to check if the position is not empty
 
   //if we are at the end, nothing to do
-  if(startPosition >= heapToChange->size - 1){
+  if(startPosition > heapToChange->size-1){
     return;
   }
 
@@ -95,16 +98,16 @@ void heapDown(heap* heapToChange, int startPosition){
   if(heapToChange->heapTable[leftChild(startPosition)].value < heapToChange->heapTable[rightChild(startPosition)].value ){
 
     //check the heap condition
-    if( heapToChange->heapTable[leftChild(startPosition)].value > heapToChange->heapTable[startPosition].value ){
+    if( heapToChange->heapTable[leftChild(startPosition)].value < heapToChange->heapTable[startPosition].value ){
       swapNodes( heapToChange, leftChild(startPosition), startPosition);
       //call the function to the node we changed
-      heapDown(heapToChange,rightChild(startPosition));
+      heapDown(heapToChange,leftChild(startPosition));
     }
 
   }else{//if the right is the lowest we have to check the right child
 
     //check heapcondition
-    if( heapToChange->heapTable[rightChild(startPosition)].value > heapToChange->heapTable[startPosition].value ){
+    if( heapToChange->heapTable[rightChild(startPosition)].value < heapToChange->heapTable[startPosition].value ){
       swapNodes( heapToChange, rightChild(startPosition), startPosition);
       //call the function to the node we changed
       heapDown(heapToChange,rightChild(startPosition));
@@ -115,23 +118,22 @@ void heapDown(heap* heapToChange, int startPosition){
   return;
 }
 
-//insert the vertice v with the value in the heap returns 1 in sucess -1 in fail
+//insert the vertice v with the value in the heap returns 1 in sucess 0 in fail
 int insertHeap(heap* heapToChange, int v, int value){
 
   //check if we have available capacity
   if(heapToChange->capacity < heapToChange->size+1){
-    return -1;
+    return 0;
   }
 
   //we go to the last insert it there and do heapUp
-
   heapNode new;
   new.v = v;
   new.value=value;
 
-  heapToChange->heapTable[heapToChange->size] = new;
-  heapToChange->heapLocations[heapToChange->size] = heapToChange->size;
-
+  heapToChange->heapTable[heapToChange->size].v = new.v;
+  heapToChange->heapTable[heapToChange->size].value = new.value;
+  heapToChange->heapLocations[v] = heapToChange->size;
   heapUp(heapToChange,heapToChange->size);
 
   //update the size
@@ -156,12 +158,12 @@ heapNode removeHeap(heap * heapToChange){
 }
 
 /* This funtion change the priority(value) of a given vertice to a new value
-    return 1 if sucess -1 if fail*/
+    return 1 if sucess 0 if fail*/
 int modifyHeap(heap* heapToChange,int v,int value){
 
   // first check if the v is in the heap, if not return fail
   if(heapToChange->heapLocations[v] == -1){
-    return -1;
+    return 0;
   }
 
   //if the vertice v is in the heap, we are ok to change it
@@ -184,12 +186,31 @@ int modifyHeap(heap* heapToChange,int v,int value){
 }
 
 /* Function that check if the heap is empty
-  return 1 if is empty, -1 otherwise*/
+  return 1 if is empty, 0 otherwise*/
 int isEmpty(heap* heapToChange){
   //if the location of the first element in the heap is -1 the it is empty
   if(heapToChange->heapLocations[heapToChange->heapTable[0].v] == -1){
     return 1;
   }else{
-    return -1;
+    return 0;
   }
+}
+
+
+void printHeap(heap* heapToChange){
+
+  printf("LOCATIONS:\n");
+  for(int i = 0;i<heapToChange->capacity;i++){
+    printf(" | array_position: %d location: %d | ",i,heapToChange->heapLocations[i]);
+    printf("\n");
+  }
+  printf("\n");
+
+  printf("HEAPTABLE:\n");
+  for(int i = 0;i<heapToChange->capacity;i++){
+    printf(" | array_position: %d vertice:%d value:%d | ",i,heapToChange->heapTable[i].v,heapToChange->heapTable[i].value);
+    printf("\n");
+  }
+  printf("\n");
+
 }

@@ -30,11 +30,13 @@ int insertHeap(heap* heapToChange, int v, int value);
 heapNode removeHeap(heap* heapToChange);
 
 /* This funtion change the priority(value) of a given vertice to a new value
-    return 1 if sucess -1 if fail*/
+    return 1 if sucess 0 if fail*/
 int modifyHeap(heap* heapToChange,int v,int value);
 
 /* Function that check if the heap is empty
-  return 1 if is empty, -1 otherwise*/
+  return 1 if is empty, 0 otherwise*/
 int isEmpty(heap* heapToChange);
+
+void printHeap(heap* heapToChange);
 
 #endif
