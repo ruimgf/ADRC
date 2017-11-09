@@ -20,9 +20,9 @@ myList  * createmyList(){
  * @param message [item to save]
  */
 void insertmyListEnd(myList * m , void * item){
-    listNode * aux;
+    //listNode * aux;
     listNode * insert_node;
-    aux = m->end;
+    //aux = m->end;
 
     insert_node = (listNode *)malloc(sizeof(listNode));
     if(insert_node == NULL){

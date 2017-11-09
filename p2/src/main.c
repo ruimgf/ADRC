@@ -23,8 +23,31 @@ int main(int argc, char const *argv[]) {
   printf("%d\n",hasCustomerCycles(G));
   printf("%d\n",isComercialConnected(G));
 
+  /*
+  test heap
 
-  dijkstra(G,atoi(argv[2]));
+  heap* test_heap = createHeap(10);
+
+  printf("----TESTING CREATION------\n");
+
+  for(int i=0;i<10;i++){
+    if(insertHeap(test_heap,i,i) == 0){
+      printf("error inserting element: %d\n", i);
+    }
+  }
+
+  printHeap(test_heap);
+
+  printf("---------------------\n");
+
+  removeHeap(test_heap);
+  printHeap(test_heap);
+  */
+  for(int i=1;i<67000;i++){
+      if(G->adj[i]->begin != NULL)
+        dijkstra(G,i);
+      //printf("%d\n",i);
+  }
+
   return 0;
-
 }

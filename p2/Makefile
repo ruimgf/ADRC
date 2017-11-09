@@ -1,5 +1,5 @@
 \CC = gcc
-CFLAGS  = -Wall -g -std=c99
+CFLAGS  = -Wall -O3 -std=c99
 TARGET = main
 
 DEPS = digraphs.o staticAnalises.o list.o heap.o
