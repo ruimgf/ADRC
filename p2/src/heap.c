@@ -43,7 +43,7 @@ int rightChild(int parent_postion){
 void swapNodes(heap* heapToChange, int heapLocationA, int heapLocationB){
   heapNode aux;
   int aux_location;
-
+  printf("SWAPPING : heapLocationA : %d heapLocationB : %d \n",heapLocationA,heapLocationB);
   /*get the vertices that we want to change*/
   int verticeA = heapToChange->heapTable[heapLocationA].v;
   int verticeB = heapToChange->heapTable[heapLocationB].v;
@@ -88,14 +88,16 @@ void heapUp(heap* heapToChange, int startPosition){
 void heapDown(heap* heapToChange, int startPosition){
 
   //TODO maybe we have to check if the position is not empty
-
+  if(leftChild(startPosition) > heapToChange->size-1){
+    return;
+  }
   //if we are at the end, nothing to do
   if(startPosition > heapToChange->size-1){
     return;
   }
 
   //check the lowest child, if the left is the minimum we have to test the left
-  if(heapToChange->heapTable[leftChild(startPosition)].value < heapToChange->heapTable[rightChild(startPosition)].value ){
+  if( rightChild(startPosition) > (heapToChange->size-1) || heapToChange->heapTable[leftChild(startPosition)].value < heapToChange->heapTable[rightChild(startPosition)].value ){
 
     //check the heap condition
     if( heapToChange->heapTable[leftChild(startPosition)].value < heapToChange->heapTable[startPosition].value ){
@@ -148,12 +150,12 @@ heapNode removeHeap(heap * heapToChange){
     ret.v = heapToChange->heapTable[0].v;
     swapNodes(heapToChange,0,heapToChange->size-1);
 
-    //erease the final element
-      //first make the location of the element -1 to know that this element is no more in the heap
-    heapToChange->heapLocations[heapToChange->heapTable[heapToChange->size - 1].v] = -1;
-    heapToChange->size = heapToChange->size - 1;
     //heap down on the first
     heapDown(heapToChange,0);
+    //erease the final element
+      //first make the location of the element -1 to know that this element is no more in the heap
+      heapToChange->heapLocations[ret.v] = -1;
+      heapToChange->size = heapToChange->size - 1;
     return ret;
 }
 
