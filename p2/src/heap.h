@@ -27,7 +27,7 @@ heap* createHeap(int capacity);
 int insertHeap(heap* heapToChange, int v, int value);
 
 //returns the first element of the heap
-heapNode removeHeap(heap* heapToChange);
+int removeHeap(heap* heapToChange);
 
 /* This funtion change the priority(value) of a given vertice to a new value
     return 1 if sucess 0 if fail*/

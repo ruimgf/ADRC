@@ -144,7 +144,7 @@ int insertHeap(heap* heapToChange, int v, int value){
 }
 
 
-heapNode removeHeap(heap * heapToChange){
+int removeHeap(heap * heapToChange){
     //we have to swap the final with the last element
     heapNode ret;
     ret.v = heapToChange->heapTable[0].v;
@@ -156,7 +156,7 @@ heapNode removeHeap(heap * heapToChange){
       //first make the location of the element -1 to know that this element is no more in the heap
       heapToChange->heapLocations[ret.v] = -1;
       heapToChange->size = heapToChange->size - 1;
-    return ret;
+    return ret.v;
 }
 
 /* This funtion change the priority(value) of a given vertice to a new value
@@ -191,7 +191,7 @@ int modifyHeap(heap* heapToChange,int v,int value){
   return 1 if is empty, 0 otherwise*/
 int isEmpty(heap* heapToChange){
   //if the location of the first element in the heap is -1 the it is empty
-  if(heapToChange->heapLocations[heapToChange->heapTable[0].v] == -1){
+  if(heapToChange->size==0){
     return 1;
   }else{
     return 0;

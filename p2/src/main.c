@@ -41,6 +41,6 @@ int main(int argc, char const *argv[]) {
   removeHeap(test_heap);
   printHeap(test_heap);
 
-  //dijkstra(G,atoi(argv[2]));
+  dijkstra(G,atoi(argv[2]));
   return 0;
 }
