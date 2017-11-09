@@ -196,6 +196,7 @@ int isComercialConnected(Graph * G){
     return 1;
 
 }
+/*
 
 int exported_route(int previous, int next){
     int mat[5][5];
@@ -263,7 +264,6 @@ void dijkstra(Graph *  G, int destination){
       //printf("analise %d\n",actual_node);
       while(aux != NULL){
           e = (Edge *)aux->item;
-          /*
           printf("edge type from %d to %d ",e->v,e->w);
           switch (e->type) {
             case CUSTOMER:
@@ -279,7 +279,6 @@ void dijkstra(Graph *  G, int destination){
               printf("%s\n", "NO_ROUTE");
               break;
           }
-          */
           if (weights[e->w] > exported_route(weights[actual_node],inv(e->type))){
             //printf("changing prior for %d previous prior %d, inverse = %d\n",e->w,weights[e->w],inv(e->type));
             weights[e->w] = exported_route(weights[actual_node],inv(e->type));
@@ -322,3 +321,4 @@ void dijkstra(Graph *  G, int destination){
 int electedRoute(Graph * G, int destination){
     return 1;
 }
+*/

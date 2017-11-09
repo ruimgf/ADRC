@@ -24,7 +24,7 @@ int main(int argc, char const *argv[]) {
   printf("%d\n",isComercialConnected(G));
 
 
-  dijkstra(G,atoi(argv[2]));
+  //dijkstra(G,atoi(argv[2]));
   return 0;
 
 }
