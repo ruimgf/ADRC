@@ -254,14 +254,15 @@ void dijkstra(Graph *  G, int destination){
     //printf("%d\n",weights[destination]);
     int actual_node;
     while(!isEmpty(h)){
-      printHeap(h);
+      //printHeap(h);
       actual_node = removeHeap(h);
       if(actual_node == -1){
         break;
       }
-
+      //printf("depois de remover\n");
+      //printHeap(h);
       aux = G->adj[actual_node]->begin;
-      printf("analise %d\n",actual_node);
+      //printf("analise %d\n",actual_node);
       while(aux != NULL){
           e = (Edge *)aux->item;
           /*

@@ -32,18 +32,18 @@ int parent(int child_position){
 }
 //function that gives the child_left position of a given father
 int leftChild(int parent_postion){
-  return parent_postion*2 ;
+  return parent_postion*2 + 1  ;
 }
 //function that gives the child_right position of a given father
 int rightChild(int parent_postion){
-  return parent_postion*2 + 1;
+  return parent_postion*2 + 2;
 }
 
 //fucntion that swaps to nodes in the heap, it must also swap the locations
 void swapNodes(heap* heapToChange, int heapLocationA, int heapLocationB){
   heapNode aux;
   int aux_location;
-  printf("SWAPPING : heapLocationA : %d heapLocationB : %d \n",heapLocationA,heapLocationB);
+  //printf("SWAPPING : heapLocationA : %d heapLocationB : %d \n",heapLocationA,heapLocationB);
   /*get the vertices that we want to change*/
   int verticeA = heapToChange->heapTable[heapLocationA].v;
   int verticeB = heapToChange->heapTable[heapLocationB].v;
@@ -149,13 +149,14 @@ int removeHeap(heap * heapToChange){
     heapNode ret;
     ret.v = heapToChange->heapTable[0].v;
     swapNodes(heapToChange,0,heapToChange->size-1);
-
+    heapToChange->heapLocations[ret.v] = -1;
+    heapToChange->size = heapToChange->size - 1;
     //heap down on the first
     heapDown(heapToChange,0);
     //erease the final element
       //first make the location of the element -1 to know that this element is no more in the heap
-      heapToChange->heapLocations[ret.v] = -1;
-      heapToChange->size = heapToChange->size - 1;
+
+
     return ret.v;
 }
 
@@ -200,7 +201,7 @@ int isEmpty(heap* heapToChange){
 
 
 void printHeap(heap* heapToChange){
-
+  /*
   printf("LOCATIONS:\n");
   for(int i = 0;i<heapToChange->capacity;i++){
     if(heapToChange->heapLocations[i]!=-1){
@@ -210,7 +211,7 @@ void printHeap(heap* heapToChange){
 
   }
   printf("\n");
-
+  */
   printf("HEAPTABLE:\n");
   for(int i = 0;i<heapToChange->size;i++){
     printf(" | array_position: %d vertice:%d value:%d | ",i,heapToChange->heapTable[i].v,heapToChange->heapTable[i].value);

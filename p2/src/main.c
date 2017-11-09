@@ -43,6 +43,10 @@ int main(int argc, char const *argv[]) {
   removeHeap(test_heap);
   printHeap(test_heap);
   */
-  dijkstra(G,atoi(argv[2]));
+  for(int i=1;i<MAX_NODES;i++){
+      if(G->adj[i]->begin != NULL)
+        dijkstra(G,i);
+  }
+
   return 0;
 }
