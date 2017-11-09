@@ -43,11 +43,11 @@ int main(int argc, char const *argv[]) {
   removeHeap(test_heap);
   printHeap(test_heap);
   */
-  for(int i=1;i<67000;i++){
-      if(G->adj[i]->begin != NULL)
-        dijkstra(G,i);
+  //for(int i=1;i<67000;i++){
+      //if(G->adj[i]->begin != NULL)
+        dijkstra(G,atoi(argv[2]));
       //printf("%d\n",i);
-  }
+  //}
 
   return 0;
 }

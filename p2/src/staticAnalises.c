@@ -266,10 +266,6 @@ void dijkstra(Graph *  G, int destination){
         printf("analise\n");
       }
       //printf("analise %d\n",actual_node);
-      if(weights[actual_node]==0){
-        heap_print(h);
-        getchar();
-      }
       while(aux != NULL){
         if(actual_node==65456){
           printf("analise\n");
@@ -302,7 +298,7 @@ void dijkstra(Graph *  G, int destination){
       }
 
     }
-    /*
+
     for(int i =1 ; i<MAX_NODES;i++){
       if(G->adj[i]->begin == NULL)
           continue;
@@ -329,7 +325,7 @@ void dijkstra(Graph *  G, int destination){
           break;
       }
     }
-    */
+    
 }
 
 int electedRoute(Graph * G, int destination){
