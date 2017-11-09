@@ -43,9 +43,10 @@ int main(int argc, char const *argv[]) {
   removeHeap(test_heap);
   printHeap(test_heap);
   */
-  for(int i=1;i<MAX_NODES;i++){
+  for(int i=1;i<67000;i++){
       if(G->adj[i]->begin != NULL)
         dijkstra(G,i);
+      //printf("%d\n",i);
   }
 
   return 0;
