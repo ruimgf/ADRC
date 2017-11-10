@@ -198,6 +198,7 @@ int isComercialConnected(Graph * G){
 }
 
 
+
 int exported_route(int previous, int next){
     int mat[5][5];
 
@@ -219,25 +220,14 @@ int exported_route(int previous, int next){
     return mat[next][previous];
 }
 
-int inv(int route){
-  switch (route) {
-    case CUSTOMER:
-        return PROVIDER;
-    case PEER:
-        return PEER;
-    case PROVIDER:
-        return CUSTOMER;
-    case NO_ROUTE:
-        return NO_ROUTE;
-  }
-}
 void dijkstra(Graph *  G, int destination,int * custumer, int * peer,int * provider){
 
     int * weights = malloc(G->V  * sizeof(int));
-
     heap * h = createHeap(G->V);
     listNode * aux;
     Edge * e;
+    int actual_node;
+
     for(int i=0; i<G->V;i++){
       if(G->adj[i]->begin != NULL){
         weights[i] = PROVIDER; // talvez mudar para costumer route
@@ -248,57 +238,22 @@ void dijkstra(Graph *  G, int destination,int * custumer, int * peer,int * provi
       }else{
         weights[i] = NO_ROUTE;
       }
-
-
     }
-    //printf("%d\n",weights[destination]);
-    int actual_node;
     while(!isEmpty(h)){
-      //printHeap(h);
       actual_node = removeHeap(h);
       if(weights[actual_node] == PROVIDER){
         break;
       }
-      //printf("depois de remover\n");
-      //printHeap(h);
       aux = G->adj[actual_node]->begin;
-      if(actual_node==65456){
-        printf("analise\n");
-      }
-      //printf("analise %d\n",actual_node);
       while(aux != NULL){
-        if(actual_node==65456){
-          printf("analise\n");
-        }
           e = (Edge *)aux->item;
-          /*
-          printf("edge type from %d to %d ",e->v,e->w);
-          switch (e->type) {
-            case CUSTOMER:
-              printf("%s\n", "CUSTOMER");
-              break;
-            case PEER:
-              printf("%s\n", "PEER");
-              break;
-            case PROVIDER:
-              printf("%s\n", "PROVIDER");
-              break;
-            case NO_ROUTE:
-              printf("%s\n", "NO_ROUTE");
-              break;
-          }*/
           if (weights[e->w] > exported_route(weights[actual_node],e->type)){
-            //printf("changing prior for %d previous prior %d, inverse = %d\n",e->w,weights[e->w],inv(e->type));
             weights[e->w] = exported_route(weights[actual_node],e->type);
-            //printf("new prior %d\n",weights[e->w]);
             modifyHeap(h,e->w,weights[e->w]);
-            //heap_print(h);
           }
           aux = aux->next;
       }
-
     }
-    freeHeap(h);
 
     for(int i =1 ; i<MAX_NODES;i++){
       if(G->adj[i]->begin == NULL)
@@ -325,7 +280,7 @@ void dijkstra(Graph *  G, int destination,int * custumer, int * peer,int * provi
           break;
       }
     }
-
+    freeHeap(h);
     free(weights);
 
 }
