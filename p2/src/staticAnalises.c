@@ -298,7 +298,8 @@ void dijkstra(Graph *  G, int destination){
       }
 
     }
-
+    freeHeap(h);
+    /*
     for(int i =1 ; i<MAX_NODES;i++){
       if(G->adj[i]->begin == NULL)
           continue;
@@ -325,7 +326,9 @@ void dijkstra(Graph *  G, int destination){
           break;
       }
     }
-    
+    */
+    free(weights);
+
 }
 
 int electedRoute(Graph * G, int destination){

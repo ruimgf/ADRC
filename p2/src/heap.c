@@ -26,6 +26,12 @@ heap* createHeap(int capacity){
 
 }
 
+void freeHeap(heap * h){
+  free(h->heapTable);
+  free(h->heapLocations);
+  free(h);
+}
+
 //function that gives the parent of a child given its position on the heap
 int parent(int child_position){
   return (child_position-1)/2;

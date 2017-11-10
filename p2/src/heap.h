@@ -39,4 +39,5 @@ int isEmpty(heap* heapToChange);
 
 void printHeap(heap* heapToChange);
 
+void freeHeap(heap * h);
 #endif
