@@ -43,11 +43,14 @@ int main(int argc, char const *argv[]) {
   removeHeap(test_heap);
   printHeap(test_heap);
   */
+  int customer=0,provider=0,peer=0;
   for(int i=1;i<67000;i++){
       if(G->adj[i]->begin != NULL)
-        dijkstra(G,atoi(argv[2]));
+        dijkstra(G,i,&customer,&peer,&provider);
       //printf("%d\n",i);
   }
-
+  printf("CUSTOMER %d\n",customer);
+  printf("PROVIDER %d\n",provider);
+  printf("PEER %d\n",peer);
   return 0;
 }

@@ -231,7 +231,7 @@ int inv(int route){
         return NO_ROUTE;
   }
 }
-void dijkstra(Graph *  G, int destination){
+void dijkstra(Graph *  G, int destination,int * custumer, int * peer,int * provider){
 
     int * weights = malloc(G->V  * sizeof(int));
 
@@ -299,34 +299,33 @@ void dijkstra(Graph *  G, int destination){
 
     }
     freeHeap(h);
-    /*
+
     for(int i =1 ; i<MAX_NODES;i++){
       if(G->adj[i]->begin == NULL)
           continue;
       switch (weights[i]) {
         case CUSTOMER:
-          printf("%d ",i);
-          printf("%s\n", "CUSTOMER");
+          //printf("%d ",i);
+          //printf("%s\n", "CUSTOMER");
+          *custumer += 1;
           break;
         case PEER:
-          printf("%d ",i);
-          printf("%s\n", "PEER");
+          //printf("%d ",i);
+          //printf("%s\n", "PEER");
+          *peer += 1;
           break;
         case PROVIDER:
-          printf("%d ",i);
-          printf("%s\n", "PROVIDER");
+          //printf("%d ",i);
+          //printf("%s\n", "PROVIDER");
+          *provider += 1;
           break;
         case NO_ROUTE:
-        printf("%d ",i);
-          printf("%s\n", "NO_ROUTE");
-          break;
-        case BEGIN:
           printf("%d ",i);
-          printf("%s\n", "DESTINATION");
+          printf("%s\n", "NO_ROUTE");
           break;
       }
     }
-    */
+
     free(weights);
 
 }

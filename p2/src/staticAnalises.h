@@ -19,5 +19,5 @@
 Graph  * loadFromFile(char * filePath);
 int hasCustomerCycles(Graph * G);
 int isComercialConnected(Graph * G);
-void dijkstra(Graph *  G, int destination);
+void dijkstra(Graph *  G, int destination,int * custumer, int * peer,int * provider);
 #endif
