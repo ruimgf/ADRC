@@ -33,6 +33,16 @@ Graph * loadFromFile(char * filePath){
     }
   }
 
+  //Check how many valid nodes exist and save in G->V
+  int n_valid_nodes = 0;
+  for(int i = 0; i < MAX_NODES; i++){
+    if(G->adj[i]->begin!=NULL){
+      n_valid_nodes = i;
+    }
+  }
+
+  G->V = n_valid_nodes;
+
   fclose(file);
   return G;
 }

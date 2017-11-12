@@ -1,7 +1,6 @@
 \CC = gcc
 CFLAGS  = -Wall -O3 -std=c99
 TARGET = main
-
 DEPS = digraphs.o staticAnalises.o list.o heap.o
 
 all: $(TARGET)
@@ -19,7 +18,7 @@ heap.o : src/heap.c src/heap.h
 	$(CC) $(CFLAGS) -c src/heap.c -o obj/heap.o
 
 $(TARGET): src/$(TARGET).c $(DEPS)
-	$(CC) $(CFLAGS) src/$(TARGET).c  obj/staticAnalises.o obj/digraphs.o obj/list.o obj/heap.o -o $(TARGET).o
+	$(CC) $(CFLAGS) src/$(TARGET).c  obj/staticAnalises.o obj/digraphs.o obj/list.o obj/heap.o -o $(TARGET).o -lpthread
 
 clean:
 	$(RM) *.o *~ obj/*.o
