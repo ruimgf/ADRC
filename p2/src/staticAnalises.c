@@ -231,6 +231,10 @@ int exported_route(int previous, int next){
 }
 
 void dijkstra(Graph *  G, int destination,int * custumer, int * peer,int * provider){
+    /*if node of destination is empty return*/
+    if(G->adj[destination]->begin == NULL){
+      return;
+    }
 
     int * weights = malloc(G->V  * sizeof(int));
     heap * h = createHeap(G->V);

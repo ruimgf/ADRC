@@ -41,9 +41,9 @@ void* handler_destination(void* new_args){
   start_aux = new_args_aux->start;
   end_aux = new_args_aux->end;
   results_aux = new_args_aux->results;
-
+  printf("start: %d , end: %d \n",start_aux,end_aux );
   //compute the routes
-  for(int i = start_aux;i<end_aux;i++){
+  for(int i = start_aux;i<=end_aux;i++){
     dijkstra(G,i,&customer,&peer,&provider);
   }
 
@@ -80,12 +80,15 @@ int* compute_routes_all_network(int N){
 
     new_args[i] = (thread_args*)malloc(sizeof(thread_args));
 
-    //in the last element we have to include the division_remainder
-    if(i == N-1){
+
+    if(i == N-1){//in the last element we have to include the division_remainder
+      new_args[i]->start = (i*division_step) + 1;
+      new_args[i]->end = ((i+1)*division_step) + division_remainder;
+    }else if(i == 0){//in zero the first element is the zero
       new_args[i]->start = i*division_step;
-      new_args[i]->end = (i+1)* division_step + division_remainder;
-    }else{
-      new_args[i]->start = i*division_step;
+      new_args[i]->end = (i+1)*division_step;
+    }else{//in other elements the formula of start is diferent
+      new_args[i]->start = (i*division_step) + 1;
       new_args[i]->end = (i+1)*division_step;
     }
 
@@ -137,9 +140,9 @@ int main(int argc, char const *argv[]) {
 
   G = loadFromFile(filePath);
 
-
-  printf("%d\n",hasCustomerCycles(G));
-  printf("%d\n",isComercialConnected(G));
+  printf("number_nodes :%d\n",G->V);
+  printf("custumer cycles :%d\n",hasCustomerCycles(G));
+  printf("comercial connected:%d\n",isComercialConnected(G));
 
   /*
   int customer=0,provider=0,peer=0;
