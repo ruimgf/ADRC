@@ -47,13 +47,13 @@ void* handler_destination(void* new_args){
     dijkstra(G,i,&customer,&peer,&provider);
   }
 
-  printf("customer: %d , peer: %d , provider: %d \n", customer,peer,provider);
 
   //save results
   results_aux[0] = customer;
   results_aux[1] = peer;
   results_aux[2] = provider;
 
+  printf("customer: %d , peer: %d , provider: %d \n", new_args_aux->results[0],new_args_aux->results[1],new_args_aux->results[2]);
   return NULL;
 }
 

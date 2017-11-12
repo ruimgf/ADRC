@@ -242,7 +242,7 @@ void dijkstra(Graph *  G, int destination,int * custumer, int * peer,int * provi
     Edge * e;
     int actual_node;
 
-    for(int i=0; i<G->V;i++){
+    for(int i=0; i<=G->V;i++){
       if(G->adj[i]->begin != NULL){
         weights[i] = PROVIDER; // talvez mudar para costumer route
         if(i==destination){
