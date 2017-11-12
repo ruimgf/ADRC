@@ -48,7 +48,7 @@ void* handler_destination(void* new_args){
     dijkstra(G,i,&customer,&peer,&provider);
     pthread_mutex_lock(&lock);
     analise +=1;
-    progressBar(analise,MAX_NODES);
+    //progressBar(analise,MAX_NODES);
     pthread_mutex_unlock(&lock);
   }
 
@@ -112,7 +112,7 @@ int* compute_routes_all_network(int N){
   for(int i=0; i < N; i++){
     pthread_join(thread[i],NULL);
   }
-  progressBarFull();
+  //progressBarFull();
   //Compute overall results
   int* results_return;
   results_return = (int*)malloc(3*sizeof(int));
@@ -151,34 +151,29 @@ int main(int argc, char const *argv[]) {
 
   welcomeScreen();
   int * results;
+  int cmd;
   while(1) {
-    int cmd = commands();
+    cmd = commands();
     switch(cmd) {
       case 1:
-          printf("This network has ");
-          if(hasCustomerCycles(G)){
-                printf("customer cycles\n");
-          }else{
-                printf("not customer cycles\n");
-          }
+          screenCustomerCycles(hasCustomerCycles(G));
+          getchar();
         break;
       case 2:
-          printf("This network is ");
-          if(isComercialConnected(G)){
-                printf("comercial connected\n");
-          }else{
-                printf("not comercial connected\n");
-          }
+          screenCommerciallyConnected(isComercialConnected(G));
+          getchar();
         break;
       case 3:
         analise=0;
         results = compute_routes_all_network(4);
-        printf("CUSTOMER %d\n",results[0]);
-        printf("PEER %d\n",results[1]);
-        printf("PROVIDER %d\n",results[2]);
+        screenResults(results, 54);
+        getchar();
         break;
       case 4:
-        exit(0);
+          system("clear");
+          exit(0);
+        break;
+      default:
         break;
     }
   }

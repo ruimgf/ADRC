@@ -18,14 +18,13 @@ void welcomeScreen() {
   printf("╠════════════════╩════════════════════════════════╣\n");
   printf("║        IST -- Instituto Superior Técnico        ║\n");
   printf("╚═════════════════════════════════════════════════╝\n\n");
-  printf("Press enter to start");
-  printf("\n");
+  printf("Press enter to start...\n");
   getchar();
 }
 
 int commands() {
   int cmd;
-  //system("clear");
+  system("clear");
   printf("╔═════════════════════════════════════════════════╗\n");
   printf("║                    COMMANDS                     ║\n");
   printf("╠═════════════════════════════════════════════════╣\n");
@@ -39,6 +38,47 @@ int commands() {
     exit(0);
   }
   return cmd;
+}
+
+void screenCustomerCycles(int flag) {
+  system("clear");
+  printf("╔═════════════════════════════════════════════╗\n");
+  if(flag) {
+    printf("║         NETWORK HAS COSTUMER CYCLES         ║\n");
+
+  } else {
+    printf("║        NETWORK HAS NO COSTUMER CYCLES       ║\n");
+  }
+  printf("╚═════════════════════════════════════════════╝\n\n");
+  printf("Press enter to go back to command screen...\n");
+  getchar();
+}
+
+void screenCommerciallyConnected(int flag) {
+  system("clear");
+  printf("╔═════════════════════════════════════════════╗\n");
+  if(flag) {
+    printf("║      NETWORK IS COMMERCIALLY CONNECTED      ║\n");
+
+  } else {
+    printf("║    NETWORK IS NOT COMMERCIALLY CONNECTED    ║\n");
+  }
+  printf("╚═════════════════════════════════════════════╝\n\n");
+  printf("Press enter to go back to command screen...\n");
+  getchar();
+}
+
+void screenResults(int * results, int node) {
+  system("clear");
+  printf("╔════════════════════════════════════════════╗\n");
+  printf("║    TYPES OF CONNECTIONS FOR NODE %-9d ║\n", node);
+  printf("╠══════════════╦══════════════╦══════════════╣\n");
+  printf("║   COSTUMER   ║   PEER       ║   PROVIDER   ║\n");
+  printf("╠══════════════╬══════════════╬══════════════╣\n");
+  printf("║   %-7d    ║   %-7d    ║   %-7d    ║\n", results[0], results[1], results[2]);
+  printf("╚══════════════╩══════════════╩══════════════╝\n\n");
+  printf("Press enter to go back to command screen...\n");
+  getchar();
 }
 
 void progressBar(int curr, int max) {
@@ -61,27 +101,3 @@ void progressBarFull(){
   printf("\n");
   return;
 }
-/*
-int main(int argc, char ** argv) {
-  welcomeScreen();
-  int cmd = commands();
-  switch(cmd) {
-    case 1:
-      break;
-    case 2:
-      break;
-    case 3:
-      break;
-    case 4:
-      break;
-  }
-  printf("\n%d\n", cmd);
-  int i = 0;
-  for( i=0;i<BAR_SIZE;i++) {
-    progressBar(i,123);
-    sleep(1);
-  }
-  progressBarFull();
-  //progressBarFull();
-}
-*/
