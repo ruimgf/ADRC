@@ -3,10 +3,11 @@
 #include <stdio.h>
 #include "heap.h"
 #include <pthread.h>
-
+#include "menu.h"
 //Global variable to be acessed in every thread
 Graph  * G;
-
+int analise=0;
+pthread_mutex_t lock;
 /**
  * structure to pass arguments to the thread
  * start   [int* that is the node where thread start computation]
@@ -41,10 +42,14 @@ void* handler_destination(void* new_args){
   start_aux = new_args_aux->start;
   end_aux = new_args_aux->end;
   results_aux = new_args_aux->results;
-  printf("start: %d , end: %d \n",start_aux,end_aux );
+  //printf("start: %d , end: %d \n",start_aux,end_aux );
   //compute the routes
   for(int i = start_aux;i<=end_aux;i++){
     dijkstra(G,i,&customer,&peer,&provider);
+    pthread_mutex_lock(&lock);
+    analise +=1;
+    progressBar(analise,MAX_NODES);
+    pthread_mutex_unlock(&lock);
   }
 
 
@@ -53,7 +58,7 @@ void* handler_destination(void* new_args){
   results_aux[1] = peer;
   results_aux[2] = provider;
 
-  printf("customer: %d , peer: %d , provider: %d \n", new_args_aux->results[0],new_args_aux->results[1],new_args_aux->results[2]);
+  //printf("customer: %d , peer: %d , provider: %d \n", new_args_aux->results[0],new_args_aux->results[1],new_args_aux->results[2]);
   return NULL;
 }
 
@@ -107,7 +112,7 @@ int* compute_routes_all_network(int N){
   for(int i=0; i < N; i++){
     pthread_join(thread[i],NULL);
   }
-
+  progressBarFull();
   //Compute overall results
   int* results_return;
   results_return = (int*)malloc(3*sizeof(int));
@@ -131,7 +136,7 @@ int main(int argc, char const *argv[]) {
 
   char filePath[100];
   //myList * test_list;
-  if(argc != 3){
+  if(argc < 2){
     printf("Usage : main.o [filename]\n");
     exit(-1);
   }
@@ -141,23 +146,43 @@ int main(int argc, char const *argv[]) {
   G = loadFromFile(filePath);
 
   printf("number_nodes :%d\n",G->V);
-  printf("custumer cycles :%d\n",hasCustomerCycles(G));
-  printf("comercial connected:%d\n",isComercialConnected(G));
 
-  /*
-  int customer=0,provider=0,peer=0;
-  for(int i=1;i<67000;i++){
-      if(G->adj[i]->begin != NULL)
-        dijkstra(G,i,&customer,&peer,&provider);
-      //printf("%d\n",i);
-  }*/
 
-  int* results;
-  results = compute_routes_all_network(4);
 
-  printf("CUSTOMER %d\n",results[0]);
-  printf("PEER %d\n",results[1]);
-  printf("PROVIDER %d\n",results[2]);
+  welcomeScreen();
+  int * results;
+  while(1) {
+    int cmd = commands();
+    switch(cmd) {
+      case 1:
+          printf("This network has ");
+          if(hasCustomerCycles(G)){
+                printf("customer cycles\n");
+          }else{
+                printf("not customer cycles\n");
+          }
+        break;
+      case 2:
+          printf("This network is ");
+          if(isComercialConnected(G)){
+                printf("comercial connected\n");
+          }else{
+                printf("not comercial connected\n");
+          }
+        break;
+      case 3:
+        analise=0;
+        results = compute_routes_all_network(4);
+        printf("CUSTOMER %d\n",results[0]);
+        printf("PEER %d\n",results[1]);
+        printf("PROVIDER %d\n",results[2]);
+        break;
+      case 4:
+        exit(0);
+        break;
+    }
+  }
+
 
   return 0;
 }

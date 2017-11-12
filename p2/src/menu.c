@@ -4,8 +4,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include "menu.h"
 
-#define BAR_SIZE 50
 
 void welcomeScreen() {
   system("clear");
@@ -25,7 +25,7 @@ void welcomeScreen() {
 
 int commands() {
   int cmd;
-  system("clear");
+  //system("clear");
   printf("╔═════════════════════════════════════════════════╗\n");
   printf("║                    COMMANDS                     ║\n");
   printf("╠═════════════════════════════════════════════════╣\n");
@@ -35,7 +35,9 @@ int commands() {
   printf("║ 4. Exit                                         ║\n");
   printf("╚═════════════════════════════════════════════════╝\n\n");
   printf("cmd: ");
-  scanf("%d",&cmd);
+  if(scanf("%d",&cmd)==0){
+    exit(0);
+  }
   return cmd;
 }
 
@@ -59,7 +61,7 @@ void progressBarFull(){
   printf("\n");
   return;
 }
-
+/*
 int main(int argc, char ** argv) {
   welcomeScreen();
   int cmd = commands();
@@ -82,3 +84,4 @@ int main(int argc, char ** argv) {
   progressBarFull();
   //progressBarFull();
 }
+*/
