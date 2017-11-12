@@ -40,7 +40,34 @@ int commands() {
   return cmd;
 }
 
-void screenCustomerCycles(int flag) {
+int commandsTypeRoutes() {
+  int cmd;
+  system("clear");
+  printf("╔═════════════════════════════════════════════════╗\n");
+  printf("║                    COMMANDS                     ║\n");
+  printf("╠═════════════════════════════════════════════════╣\n");
+  printf("║ 1. Destination Node                             ║\n");
+  printf("║ 2. All Nodes                                    ║\n");
+  printf("║ 3. Back to Menu                                 ║\n");
+  printf("╚═════════════════════════════════════════════════╝\n\n");
+  printf("cmd: ");
+  if(scanf("%d",&cmd)==0){
+    exit(0);
+  }
+  return cmd;
+}
+
+void runTime(double total_time) {
+  if(total_time>=60){
+    printf("Run Time = %d minutes.\n\n", (int)total_time/60);
+  }else if(total_time<60 && total_time>1){
+    printf("Run Time = %.0lf milliseconds.\n\n", total_time);
+  }else{
+    printf("Run Time = %.0lf microseconds.\n\n", total_time*1000);
+  }
+}
+
+void screenCustomerCycles(int flag, double time_spent) {
   system("clear");
   printf("╔═════════════════════════════════════════════╗\n");
   if(flag) {
@@ -50,11 +77,12 @@ void screenCustomerCycles(int flag) {
     printf("║        NETWORK HAS NO COSTUMER CYCLES       ║\n");
   }
   printf("╚═════════════════════════════════════════════╝\n\n");
+  runTime(time_spent);
   printf("Press enter to go back to command screen...\n");
   getchar();
 }
 
-void screenCommerciallyConnected(int flag) {
+void screenCommerciallyConnected(int flag, double time_spent) {
   system("clear");
   printf("╔═════════════════════════════════════════════╗\n");
   if(flag) {
@@ -64,19 +92,21 @@ void screenCommerciallyConnected(int flag) {
     printf("║    NETWORK IS NOT COMMERCIALLY CONNECTED    ║\n");
   }
   printf("╚═════════════════════════════════════════════╝\n\n");
+  runTime(time_spent);
   printf("Press enter to go back to command screen...\n");
   getchar();
 }
 
-void screenResults(int * results, int node) {
+void screenResults(int * results, int node, double time_spent) {
   system("clear");
   printf("╔════════════════════════════════════════════╗\n");
   printf("║    TYPES OF CONNECTIONS FOR NODE %-9d ║\n", node);
   printf("╠══════════════╦══════════════╦══════════════╣\n");
-  printf("║   COSTUMER   ║   PEER       ║   PROVIDER   ║\n");
+  printf("║ COSTUMER     ║ PEER         ║ PROVIDER     ║\n");
   printf("╠══════════════╬══════════════╬══════════════╣\n");
-  printf("║   %-7d    ║   %-7d    ║   %-7d    ║\n", results[0], results[1], results[2]);
+  printf("║ %-9d    ║ %-9d    ║ %-9d    ║\n", results[0], results[1], results[2]);
   printf("╚══════════════╩══════════════╩══════════════╝\n\n");
+  runTime(time_spent);
   printf("Press enter to go back to command screen...\n");
   getchar();
 }

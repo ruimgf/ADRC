@@ -4,6 +4,7 @@
 #include "heap.h"
 #include <pthread.h>
 #include "menu.h"
+#include <time.h>
 //Global variable to be acessed in every thread
 Graph  * G;
 int analise=0;
@@ -151,29 +152,64 @@ int main(int argc, char const *argv[]) {
 
   welcomeScreen();
   int * results;
-  int cmd;
+  int results2[3];
+  int cmd, cmd2, node_djikstra = 0, flag, menu2 = 1;
+  clock_t begin = clock();
+  clock_t end = clock();
+  double total_time;
   while(1) {
+    menu2 = 1;
     cmd = commands();
     switch(cmd) {
       case 1:
-          screenCustomerCycles(hasCustomerCycles(G));
+          begin = clock();
+          flag = hasCustomerCycles(G);
+          end = clock();
+          total_time = (double)(end - begin) / CLOCKS_PER_SEC;
+          screenCustomerCycles(flag, total_time);
           getchar();
         break;
       case 2:
-          screenCommerciallyConnected(isComercialConnected(G));
+          begin = clock();
+          flag = isComercialConnected(G);
+          end = clock();
+          total_time = (double)(end - begin) / CLOCKS_PER_SEC;
+          screenCommerciallyConnected(flag, total_time);
           getchar();
         break;
       case 3:
         analise=0;
-        results = compute_routes_all_network(4);
-        screenResults(results, 54);
-        getchar();
+        while(menu2) {
+          cmd2 = commandsTypeRoutes();
+          switch(cmd2) {
+            case 1:
+                printf("\nDestination Node: ");
+                scanf("%d", &node_djikstra);
+                begin = clock();
+                dijkstra(G, node_djikstra, &results2[0], &results2[1], &results2[2]);
+                end = clock();
+                total_time = (double)(end - begin) / CLOCKS_PER_SEC;
+                screenResults(results2, node_djikstra, total_time);
+                getchar();
+              break;
+            case 2:
+                printf("\nIn progress... This may take some time...\n");
+                begin = clock();
+                results = compute_routes_all_network(4);
+                end = clock();
+                total_time = (double)(end - begin) / CLOCKS_PER_SEC;
+                screenResults(results, node_djikstra, total_time);
+                getchar();
+              break;
+            case 3:
+                menu2 = 0;
+              break;
+          }
+        }
         break;
       case 4:
           system("clear");
           exit(0);
-        break;
-      default:
         break;
     }
   }
