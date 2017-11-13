@@ -197,11 +197,13 @@ int main(int argc, char const *argv[]) {
               break;
             case 2:
                 printf("\nIn progress... This may take some time...\n");
-                begin = clock();
-                results = compute_routes_all_network(4);
-                end = clock();
-                total_time = (double)(end - begin) / CLOCKS_PER_SEC;
-                screenResults(results, node_djikstra, total_time);
+                //begin = clock();
+                for(int i = 0;i<=66000;i++){
+                  dijkstra(G, i, &results2[0], &results2[1], &results2[2]);
+                }
+                //end = clock();
+                //total_time = (double)(end - begin) / CLOCKS_PER_SEC;
+                screenResults(results2, node_djikstra, total_time);
                 getchar();
               break;
             case 3:
