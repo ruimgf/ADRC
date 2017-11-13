@@ -186,6 +186,9 @@ int main(int argc, char const *argv[]) {
                 printf("\nDestination Node: ");
                 scanf("%d", &node_djikstra);
                 begin = clock();
+                results[0] = 0;
+                results[1] = 0;
+                results[2] = 0;
                 dijkstra(G, node_djikstra, &results2[0], &results2[1], &results2[2]);
                 end = clock();
                 total_time = (double)(end - begin) / CLOCKS_PER_SEC;
