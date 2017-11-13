@@ -203,7 +203,7 @@ int main(int argc, char const *argv[]) {
                 }
                 //end = clock();
                 //total_time = (double)(end - begin) / CLOCKS_PER_SEC;
-                screenResults(results2, node_djikstra, total_time);
+                //screenResults(results2, node_djikstra, total_time);
                 getchar();
               break;
             case 3:
@@ -213,7 +213,7 @@ int main(int argc, char const *argv[]) {
         }
         break;
       case 4:
-          system("clear");
+          //system("clear");
           exit(0);
         break;
     }
