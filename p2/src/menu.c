@@ -8,7 +8,7 @@
 
 
 void welcomeScreen() {
-  system("clear");
+  //system("clear");
   printf("╔═════════════════════════════════════════════════╗\n");
   printf("║       Static Analysis of Inter-AS Routing       ║\n");
   printf("╠════════════════╦════════════════════════════════╣\n");
@@ -24,7 +24,7 @@ void welcomeScreen() {
 
 int commands() {
   int cmd;
-  system("clear");
+  //system("clear");
   printf("╔═════════════════════════════════════════════════╗\n");
   printf("║                    COMMANDS                     ║\n");
   printf("╠═════════════════════════════════════════════════╣\n");
@@ -42,7 +42,7 @@ int commands() {
 
 int commandsTypeRoutes() {
   int cmd;
-  system("clear");
+  //system("clear");
   printf("╔═════════════════════════════════════════════════╗\n");
   printf("║                    COMMANDS                     ║\n");
   printf("╠═════════════════════════════════════════════════╣\n");
@@ -68,7 +68,7 @@ void runTime(double total_time) {
 }
 
 void screenCustomerCycles(int flag, double time_spent) {
-  system("clear");
+  //system("clear");
   printf("╔═════════════════════════════════════════════╗\n");
   if(flag) {
     printf("║         NETWORK HAS COSTUMER CYCLES         ║\n");
@@ -83,7 +83,7 @@ void screenCustomerCycles(int flag, double time_spent) {
 }
 
 void screenCommerciallyConnected(int flag, double time_spent) {
-  system("clear");
+  //system("clear");
   printf("╔═════════════════════════════════════════════╗\n");
   if(flag) {
     printf("║      NETWORK IS COMMERCIALLY CONNECTED      ║\n");
@@ -98,7 +98,7 @@ void screenCommerciallyConnected(int flag, double time_spent) {
 }
 
 void screenResults(int * results, int node, double time_spent) {
-  system("clear");
+  //system("clear");
   printf("╔════════════════════════════════════════════╗\n");
   printf("║    TYPES OF CONNECTIONS FOR NODE %-9d ║\n", node);
   printf("╠══════════════╦══════════════╦══════════════╣\n");
