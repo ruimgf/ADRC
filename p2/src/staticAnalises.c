@@ -294,8 +294,8 @@ void dijkstra(Graph *  G, int destination,int * custumer, int * peer,int * provi
           break;
       }
     }
-    //freeHeap(h);
-    //free(weights);
+    freeHeap(h);
+    free(weights);
 
 }
 
