@@ -154,27 +154,24 @@ int main(int argc, char const *argv[]) {
   int * results;
   int results2[3];
   int cmd, cmd2, node_djikstra = 0, flag, menu2 = 1;
-  clock_t begin = clock();
-  clock_t end = clock();
-  double total_time;
+  time_t begin;
+  time_t end;
   while(1) {
     menu2 = 1;
     cmd = commands();
     switch(cmd) {
       case 1:
-          begin = clock();
+          begin = time(NULL);
           flag = hasCustomerCycles(G);
-          end = clock();
-          total_time = (double)(end - begin) / CLOCKS_PER_SEC;
-          screenCustomerCycles(flag, total_time);
+          end = time(NULL);
+          screenCustomerCycles(flag, end - begin);
           getchar();
         break;
       case 2:
-          begin = clock();
+          begin = time(NULL);
           flag = isComercialConnected(G);
-          end = clock();
-          total_time = (double)(end - begin) / CLOCKS_PER_SEC;
-          screenCommerciallyConnected(flag, total_time);
+          end = time(NULL);
+          screenCommerciallyConnected(flag, end - begin);
           getchar();
         break;
       case 3:
@@ -185,25 +182,23 @@ int main(int argc, char const *argv[]) {
             case 1:
                 printf("\nDestination Node: ");
                 scanf("%d", &node_djikstra);
-                begin = clock();
+                begin = time(NULL);
                 results2[0] = 0;
                 results2[1] = 0;
                 results2[2] = 0;
                 dijkstra(G, node_djikstra, &results2[0], &results2[1], &results2[2]);
-                end = clock();
-                total_time = (double)(end - begin) / CLOCKS_PER_SEC;
-                screenResults(results2, node_djikstra, total_time);
+                end = time(NULL);
+                screenResults(results2, node_djikstra, end - begin);
                 getchar();
               break;
             case 2:
                 printf("\nIn progress... This may take some time...\n");
-                //begin = clock();
+                begin = time(NULL);
                 for(int i = 0;i<=66000;i++){
                   dijkstra(G, i, &results2[0], &results2[1], &results2[2]);
                 }
-                //end = clock();
-                //total_time = (double)(end - begin) / CLOCKS_PER_SEC;
-                //screenResults(results2, node_djikstra, total_time);
+                end = time(NULL);
+                screenResults(results2, node_djikstra, end - begin);
                 getchar();
               break;
             case 3:

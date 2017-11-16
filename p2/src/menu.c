@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include "menu.h"
+#include <time.h>
 
 
 void welcomeScreen() {
@@ -57,17 +58,11 @@ int commandsTypeRoutes() {
   return cmd;
 }
 
-void runTime(double total_time) {
-  if(total_time>=60){
-    printf("Run Time = %d minutes.\n\n", (int)total_time/60);
-  }else if(total_time<60 && total_time>1){
-    printf("Run Time = %.0lf milliseconds.\n\n", total_time);
-  }else{
-    printf("Run Time = %.0lf microseconds.\n\n", total_time*1000);
-  }
+void runTime(time_t total_time) {
+  printf("Run Time = %ld seconds.\n\n", total_time);
 }
 
-void screenCustomerCycles(int flag, double time_spent) {
+void screenCustomerCycles(int flag, time_t time_spent) {
   //system("clear");
   printf("╔═════════════════════════════════════════════╗\n");
   if(flag) {
@@ -82,7 +77,7 @@ void screenCustomerCycles(int flag, double time_spent) {
   getchar();
 }
 
-void screenCommerciallyConnected(int flag, double time_spent) {
+void screenCommerciallyConnected(int flag, time_t time_spent) {
   //system("clear");
   printf("╔═════════════════════════════════════════════╗\n");
   if(flag) {
@@ -97,14 +92,14 @@ void screenCommerciallyConnected(int flag, double time_spent) {
   getchar();
 }
 
-void screenResults(int * results, int node, double time_spent) {
+void screenResults(int * results, int node, time_t time_spent) {
   //system("clear");
   printf("╔════════════════════════════════════════════╗\n");
   printf("║    TYPES OF CONNECTIONS FOR NODE %-9d ║\n", node);
   printf("╠══════════════╦══════════════╦══════════════╣\n");
   printf("║ COSTUMER     ║ PEER         ║ PROVIDER     ║\n");
   printf("╠══════════════╬══════════════╬══════════════╣\n");
-  printf("║ %-9d    ║ %-9d    ║ %-9d    ║\n", results[0], results[1], results[2]);
+  printf("║ %-12d ║ %-12d ║ %-12d ║\n", results[0], results[1], results[2]);
   printf("╚══════════════╩══════════════╩══════════════╝\n\n");
   runTime(time_spent);
   printf("Press enter to go back to command screen...\n");
