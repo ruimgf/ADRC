@@ -151,7 +151,7 @@ int main(int argc, char const *argv[]) {
 
 
   welcomeScreen();
-  int * results;
+  //int * results;
   int results2[3];
   int cmd, cmd2, node_djikstra = 0, flag, menu2 = 1;
   time_t begin;
